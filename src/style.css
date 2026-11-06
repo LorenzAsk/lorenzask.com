@@ -374,6 +374,12 @@ body::after {
   align-items: center;
   gap: 0.8rem;
   margin-bottom: 1.6rem;
+  font-family: var(--sans);
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
 }
 .hero-kicker .dot {
   width: 7px; height: 7px;
