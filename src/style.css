@@ -311,7 +311,8 @@ button, input, textarea { font: inherit; color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1.6rem;
+  white-space: nowrap;
+  text-transform: uppercase;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.2);
