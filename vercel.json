@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/kvantra", "destination": "/work/", "permanent": true },
+    { "source": "/kvantra/", "destination": "/work/", "permanent": true }
+  ]
+}

@@ -8,8 +8,8 @@
    the detail and still run at full frame rate.
 
    Four things happen on top of the hills:
-   - the highest peaks glow in the accent colour, like top-ranked stocks
-   - a band of light sweeps through the field, like a scan of the market
+   - the highest peaks are drawn bolder than the valleys
+   - a band of light sweeps slowly through the field
    - the surface swells and ripples under your cursor
    - scrolling flies the camera forward and down into it
    ========================================================================== */
@@ -27,7 +27,7 @@ const SETTINGS = {
   scanSpeed: 5.5,    // how fast the light band travels (units per second)
   mouseLift: 1.7,    // how much the surface swells under the cursor
   mouseRadius: 3.4,  // how wide that swell is
-  lineOpacity: 0.62, // base strength of the lines
+  lineOpacity: 0.7,  // base strength of the lines
   dotEvery: 5,       // a glowing dot every N points on every second line
 };
 
@@ -131,10 +131,13 @@ const TERRAIN = /* glsl */ `
   }
 `;
 
-/* Colour and fade, shared by both layers. */
+/* Colour and fade, shared by both layers.
+   Lines are white where the sky behind them is blue, and turn sky blue lower
+   down where the page fades to white, so they read on both. */
 const SHADE = /* glsl */ `
-  uniform vec3  uBase;
-  uniform vec3  uAccent;
+  uniform vec3  uHigh;
+  uniform vec3  uLow;
+  uniform vec2  uResolution;
   uniform float uFogNear;
   uniform float uFogFar;
 
@@ -149,7 +152,10 @@ const SHADE = /* glsl */ `
     float near = smoothstep(1.5, 4.5, vDepth);                   // and don't block the camera
     return far * near * vEdge;
   }
-  vec3 tint() { return mix(mix(uBase, uAccent, peak()), uAccent, vScan * 0.85); }
+  vec3 tint() {
+    float y = gl_FragCoord.y / uResolution.y;          // 0 at the bottom, 1 at the top
+    return mix(uLow, uHigh, smoothstep(0.3, 0.62, y));
+  }
 `;
 
 export function createLandscape(canvas) {
@@ -172,8 +178,8 @@ export function createLandscape(canvas) {
   // ---- Scene and camera ----
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 120);
-  const cameraHome = new THREE.Vector3(0, 4.6, 10.5);
-  const lookHome = new THREE.Vector3(0, -1.6, -3);
+  const cameraHome = new THREE.Vector3(0, 2.8, 11);
+  const lookHome = new THREE.Vector3(0, 0.4, -10);
   const look = lookHome.clone();
 
   // ---- Colours come from the CSS tokens ----
@@ -190,8 +196,9 @@ export function createLandscape(canvas) {
     uMouseRadius: { value: SETTINGS.mouseRadius },
     uScanZ:       { value: -100 },
     uHalfWidth:   { value: SETTINGS.width / 2 },
-    uBase:        { value: color('--land-base', '#4a535b') },
-    uAccent:      { value: color('--accent', '#8dffc4') },
+    uHigh:        { value: new THREE.Color('#ffffff') },
+    uLow:         { value: color('--sky', '#0099ff') },
+    uResolution:  { value: new THREE.Vector2(1, 1) },
     uFogNear:     { value: 9 },
     uFogFar:      { value: 40 },
     uOpacity:     { value: SETTINGS.lineOpacity },
@@ -215,15 +222,16 @@ export function createLandscape(canvas) {
     uniforms,
     transparent: true,
     depthWrite: false,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.NormalBlending,
+    premultipliedAlpha: true,
     vertexShader: NOISE + TERRAIN + /* glsl */ `
       void main() { gl_Position = placePoint(position); }
     `,
     fragmentShader: SHADE + /* glsl */ `
       uniform float uOpacity;
       void main() {
-        float a = uOpacity * (0.75 + peak() * 1.4 + vScan * 1.6) * visibility();
-        gl_FragColor = vec4(tint(), a); // additive blending multiplies by alpha itself
+        float a = min(uOpacity * (0.55 + peak() * 0.9 + vScan * 0.8) * visibility(), 1.0);
+        gl_FragColor = vec4(tint() * a, a); // colour pre-multiplied by its opacity
       }
     `,
   });
@@ -246,7 +254,8 @@ export function createLandscape(canvas) {
     uniforms,
     transparent: true,
     depthWrite: false,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.NormalBlending,
+    premultipliedAlpha: true,
     vertexShader: NOISE + TERRAIN + /* glsl */ `
       uniform float uPixelRatio;
       void main() {
@@ -259,8 +268,8 @@ export function createLandscape(canvas) {
       void main() {
         float d = length(gl_PointCoord - 0.5);
         float disc = smoothstep(0.5, 0.0, d);
-        float a = disc * (0.22 + peak() * 1.2 + vScan * 1.0) * visibility();
-        gl_FragColor = vec4(tint(), a); // additive blending multiplies by alpha itself
+        float a = min(disc * (0.25 + peak() * 0.9 + vScan * 0.7) * visibility(), 1.0);
+        gl_FragColor = vec4(tint() * a, a);
       }
     `,
   });
@@ -305,6 +314,7 @@ export function createLandscape(canvas) {
     renderer.setPixelRatio(dpr);
     renderer.setSize(width, height, false);
     uniforms.uPixelRatio.value = dpr;
+    renderer.getDrawingBufferSize(uniforms.uResolution.value);
     camera.aspect = width / height;
     // Narrow screens: pull back a little so the field still fills the frame.
     camera.fov = camera.aspect < 0.8 ? 58 : 42;

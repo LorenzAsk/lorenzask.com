@@ -3,183 +3,253 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#060708">
-  <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('lorenzask-intro'))document.documentElement.classList.add('intro-seen')}catch(e){}</script>
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#0099FF">
+  <script>document.documentElement.classList.add('js')</script>
 
   <title>Lorenz Ask</title>
-  <meta name="description" content="Lorenz Ask is co-founder of Kvantra, the stock analysis platform that scores every stock 0–100 against its real peers.">
+  <meta name="description" content="Lorenz Ask: founder of Kvantra, ultra runner in training. Raised in Zurich, based in Ålesund.">
   <meta property="og:title" content="Lorenz Ask">
-  <meta property="og:description" content="Co-founder of Kvantra. Building the investing tool I wanted at 12.">
+  <meta property="og:description" content="Full speed ahead. Founder of Kvantra, ultra runner in training, raised in Zurich, based in Ålesund.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lorenzask.com">
+  <meta property="og:url" content="https://www.lorenzask.com/">
   <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://www.lorenzask.com/">
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="canonical" href="https://lorenzask.com">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- First visit only: counts 000 → 100, then lifts away (see src/motion.js). -->
-  <div class="intro" aria-hidden="true">
-    <div class="intro-count">000</div>
-    <div class="intro-meta">
-      <span class="label">Lorenz Ask</span>
-      <span class="label">Calibrating score</span>
-    </div>
-    <div class="intro-track"><div class="intro-bar"></div></div>
-  </div>
-
   <header class="site-header">
     <a class="site-name" href="/">Lorenz Ask</a>
     <nav class="site-nav" aria-label="Primary">
       <a href="/about/">About</a>
-      <a href="/kvantra/">Kvantra</a>
+      <a href="/work/">Work</a>
       <a href="/contact/">Contact</a>
     </nav>
+    <a class="btn header-cta" href="/contact/">Let's talk <span class="arrow">↗</span></a>
   </header>
 
   <main id="main">
 
-    <!-- ============ HERO ============ -->
+    <!-- ============ HERO: the sky ============ -->
     <section class="hero">
       <canvas class="landscape" aria-hidden="true"></canvas>
 
       <div class="hero-inner">
-        <p class="hero-kicker" data-reveal><span class="dot"></span>DEMO SITE</p>
-
-        <h1 class="hero-title" data-split>Building the investing tool I wanted <em>at&nbsp;12.</em></h1>
-
-        <div class="hero-foot">
-          <p class="hero-sub" data-reveal style="--d: 3">Kvantra scores every stock from 0 to 100 against the companies it actually competes with. One number, and the reasons behind it.</p>
-          <div class="hero-actions" data-reveal style="--d: 4">
-            <a class="btn btn-primary" href="/kvantra/">See Kvantra <span class="arrow">→</span></a>
-            <a class="btn" href="/contact/">Write to me</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker-track">
-          <span>KvantraRank 0–100</span><span>60,000+ companies</span><span>Quality</span><span>Value</span><span>Momentum</span><span>Ranked against real peers</span>
-          <span>KvantraRank 0–100</span><span>60,000+ companies</span><span>Quality</span><span>Value</span><span>Momentum</span><span>Ranked against real peers</span>
+        <span class="demo-chip">DEMO SITE</span>
+        <h1 class="display hero-title" data-split>Lorenz Ask.<br>Full speed ahead.</h1>
+        <p class="hero-sub" data-reveal style="--d: 3">Founder of Kvantra. Ultra runner in training. Raised in Zurich, based in Ålesund.</p>
+        <div class="hero-actions" data-reveal style="--d: 4">
+          <a class="btn" href="/about/">My story <span class="arrow">↗</span></a>
+          <a class="btn btn-ghost" href="/contact/">Let's talk</a>
         </div>
       </div>
     </section>
 
-    <!-- ============ ORIGIN ============ -->
-    <section class="block origin" aria-labelledby="origin-title">
+    <!-- ============ NOW ============ -->
+    <section class="block" aria-labelledby="now-title">
       <div class="block-head">
-        <h2 class="label" id="origin-title">01 — Origin</h2>
-        <span class="label">Zurich → Kvantra</span>
+        <h2 class="display block-title" id="now-title">Now</h2>
+        <span class="label">Updated November 2026</span>
       </div>
+      <ol class="now-list">
+        <li>
+          <span class="num">01</span>
+          <div><h3>Building Kvantra</h3><p>The idea came in April 2025, in a military sauna. It's been my life ever since.</p></div>
+          <a class="go" href="https://kvantra.ai" rel="noopener noreferrer">kvantra.ai ↗</a>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <div><h3>Training for Oslo–Bergen</h3><p>Running since August 2025. Now going for the ultra.</p></div>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <div><h3>Learning to code</h3><p>This site is the first thing I've built myself, by hand.</p></div>
+        </li>
+        <li>
+          <span class="num">04</span>
+          <div><h3>Living in Ålesund</h3><p>On the west coast of Norway, after a childhood between here and Zurich.</p></div>
+        </li>
+      </ol>
+    </section>
 
-      <div class="origin-grid">
-        <div>
-          <p class="scrub" data-scrub>I started investing at twelve. Everyone around me was guessing, with no method and no yardstick. So I built the one I was missing, and called it <em>KvantraRank.</em></p>
-          <a class="arrow-link origin-more" href="/about/" data-reveal>The longer version</a>
+    <!-- ============ THE LONG RUN: life as a race (see src/ultra.js) ============ -->
+    <section class="ultra" data-ultra aria-labelledby="ultra-title">
+      <div class="ultra-pin">
+        <div class="block-head ultra-head">
+          <h2 class="display block-title" id="ultra-title">The long run</h2>
+          <span class="label ultra-hint">Scroll to run</span>
         </div>
 
-        <figure class="origin-photo">
-          <img src="/lorenz-ask.jpg" alt="Lorenz Ask presenting Kvantra on a large screen, showing a stock with a KvantraRank of 80." width="1328" height="2000" loading="lazy" decoding="async">
-          <figcaption class="label">Presenting Kvantra, July 2026</figcaption>
+        <div class="ultra-top" aria-hidden="true">
+          <div class="ultra-panel">
+            <span class="label ultra-when"></span>
+            <p class="display ultra-big"></p>
+            <p class="ultra-title"></p>
+            <p class="ultra-text"></p>
+          </div>
+          <div class="ultra-hud">
+            <span class="label">Checkpoint</span>
+            <span class="display" data-hud-cp>CP 01 / 09</span>
+            <span class="label">Next: Oslo–Bergen</span>
+          </div>
+        </div>
+
+        <div class="ultra-chart" aria-hidden="true">
+          <svg viewBox="0 0 1000 400" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="ultra-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0099FF" stop-opacity="0.28" />
+                <stop offset="100%" stop-color="#0099FF" stop-opacity="0" />
+              </linearGradient>
+              <clipPath id="ultra-clip"><rect x="0" y="0" width="0" height="400" /></clipPath>
+            </defs>
+            <line class="ultra-grid" x1="0" y1="100" x2="1000" y2="100" />
+            <line class="ultra-grid" x1="0" y1="200" x2="1000" y2="200" />
+            <line class="ultra-grid" x1="0" y1="300" x2="1000" y2="300" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- The chapters. Screen readers read this list; the chart above is drawn from it. -->
+      <ol class="ultra-list">
+        <li data-when="Age 0–10" data-big="Zurich" data-short="Zurich">
+          <h3>Born in Zurich</h3>
+          <p>Ten years in the city, and every winter on skis in the Swiss Alps. I've skied since I could stand.</p>
+        </li>
+        <li data-when="Age 10–12" data-big="Ålesund" data-short="Ålesund">
+          <h3>First move north</h3>
+          <p>Two years on the west coast of Norway.</p>
+        </li>
+        <li data-when="Age 12" data-big="First trade" data-short="Age 12">
+          <h3>Started investing</h3>
+          <p>Watching the people around me invest without a method made it obvious what was missing.</p>
+        </li>
+        <li data-when="Age 12–14" data-big="Zurich" data-short="Zurich">
+          <h3>Back again</h3>
+          <p>Two more years in Zurich.</p>
+        </li>
+        <li data-when="9th grade" data-big="Ålesund" data-short="Home">
+          <h3>Home for good</h3>
+          <p>Settled in Ålesund in 9th grade and finished high school here.</p>
+        </li>
+        <li data-when="One year" data-big="Lofoten" data-short="Arctic">
+          <h3>Idrettssoldat</h3>
+          <p>Straight from high school into the military: a year north of the Arctic Circle, near Lofoten. Promoted to ledende menig.</p>
+        </li>
+        <li data-when="April 2025" data-big="Kvantra" data-short="Kvantra">
+          <h3>An idea in the sauna</h3>
+          <p>The idea for Kvantra came in the military sauna. It has been my life ever since.</p>
+        </li>
+        <li data-when="August 2025" data-big="Running" data-short="Running">
+          <h3>New to running, not to endurance</h3>
+          <p>Started running, and kept going. Now training for the Oslo–Bergen ultra.</p>
+        </li>
+        <li data-when="Now" data-big="Full speed" data-short="Now">
+          <h3>Ahead</h3>
+          <p>Building Kvantra, learning to code, and putting in the kilometres.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ THINGS I CARE ABOUT ============ -->
+    <section class="block" aria-labelledby="cares-title">
+      <div class="block-head">
+        <h2 class="display block-title" id="cares-title">Off the clock</h2>
+        <span class="label">Things I care about</span>
+      </div>
+      <ul class="cares">
+        <li class="care">
+          <span class="label">Running</span>
+          <span class="stat">Ultra</span>
+          <h3>Ultra running</h3>
+          <p>Since August 2025. Next up: Oslo–Bergen.</p>
+        </li>
+        <li class="care">
+          <span class="label">Skiing</span>
+          <span class="stat">Alps</span>
+          <h3>Skiing</h3>
+          <p>Since I could stand. Most of it in the Swiss Alps.</p>
+        </li>
+        <li class="care">
+          <span class="label">Travel</span>
+          <span class="stat">Away</span>
+          <h3>Travel</h3>
+          <p>New places, whenever I can.</p>
+        </li>
+        <li class="care care-cube" tabindex="0" role="button" aria-label="Rubik's cube: press to scramble or solve it">
+          <span class="label">Rubik's cube</span>
+          <div class="cube-stage"><div class="cube" data-cube></div></div>
+          <span class="stat">18 sec</span>
+          <h3>Personal best</h3>
+          <p class="cube-hint">Click to scramble</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============ PHOTOS ============ -->
+    <section class="block" aria-labelledby="photos-title">
+      <div class="block-head">
+        <h2 class="display block-title" id="photos-title">Moments</h2>
+        <span class="label">More coming</span>
+      </div>
+      <!-- To add a photo: put it in public/photos/, then replace a placeholder
+           <figure> with one like the first: an <img> and a <figcaption>. -->
+      <div class="photos">
+        <figure class="photo">
+          <img src="/lorenz-ask.jpg" alt="Lorenz presenting Kvantra on a large screen." width="1328" height="2000" loading="lazy" decoding="async">
+          <figcaption class="label">Presenting Kvantra, 2026</figcaption>
         </figure>
+        <figure class="photo is-placeholder"><figcaption class="label">Running</figcaption></figure>
+        <figure class="photo is-placeholder"><figcaption class="label">Skiing, Swiss Alps</figcaption></figure>
+        <figure class="photo is-placeholder"><figcaption class="label">Lofoten</figcaption></figure>
+        <figure class="photo is-placeholder"><figcaption class="label">Travel</figcaption></figure>
       </div>
-    </section>
-
-    <!-- ============ KVANTRARANK ============ -->
-    <section class="block rank" aria-labelledby="rank-title">
-      <div class="block-head">
-        <span class="label">02 — KvantraRank</span>
-        <span class="label">Drag the dial</span>
-      </div>
-
-      <div class="rank-grid">
-        <div>
-          <div class="dial" data-dial>
-            <svg viewBox="0 0 400 400" aria-hidden="true">
-              <defs>
-                <radialGradient id="dial-glow">
-                  <stop offset="0%" stop-color="#8dffc4" stop-opacity="0.16" />
-                  <stop offset="70%" stop-color="#8dffc4" stop-opacity="0" />
-                </radialGradient>
-              </defs>
-              <circle class="dial-glow" cx="200" cy="200" r="160" />
-              <circle class="dial-track" cx="200" cy="200" r="150" />
-            </svg>
-            <div class="dial-readout">
-              <span class="dial-value" aria-hidden="true">80</span>
-              <span class="label">KvantraRank</span>
-            </div>
-          </div>
-          <div class="dial-control">
-            <label class="sr-only" for="dial-input">Try a KvantraRank score</label>
-            <input id="dial-input" type="range" min="0" max="100" value="80" data-dial-input>
-            <p class="dial-caption">A score of <strong data-dial-percent>80%</strong> means a stock ranks higher than that share of its peers.</p>
-          </div>
-        </div>
-
-        <div>
-          <h2 class="rank-title" id="rank-title" data-split>One number. <em>Three reasons.</em></h2>
-          <p class="rank-lede" data-reveal>Every stock gets a score from 0 to 100, ranked only against its real peers. Open it, and you see exactly where it comes from.</p>
-
-          <ul class="factor-rows">
-            <li data-reveal><span class="label">Q</span><div><h3>Quality</h3><p>Profitability, cash generation and balance-sheet strength.</p></div></li>
-            <li data-reveal><span class="label">V</span><div><h3>Value</h3><p>How cheaply a company is priced relative to its fundamentals.</p></div></li>
-            <li data-reveal><span class="label">M</span><div><h3>Momentum</h3><p>Whether it has outperformed its peers, including the trend in analyst expectations.</p></div></li>
-          </ul>
-        </div>
-      </div>
-
-      <dl class="numbers">
-        <div data-reveal><dt data-count="60000" data-suffix="+">60,000+</dt><dd class="label">Companies scored</dd></div>
-        <div data-reveal><dt>0–100</dt><dd class="label">One score per stock</dd></div>
-        <div data-reveal><dt data-count="3">3</dt><dd class="label">Factors behind it</dd></div>
-      </dl>
     </section>
 
     <!-- ============ INDEX ============ -->
     <section class="block" aria-labelledby="index-title">
       <div class="block-head">
-        <h2 class="label" id="index-title">03 — Index</h2>
+        <h2 class="display block-title" id="index-title">More</h2>
         <span class="label">Three pages</span>
       </div>
-
       <nav class="index-list" aria-label="Pages">
-        <a href="/about/" data-reveal><span class="label">01</span><strong>About</strong><p>Zurich, investing at twelve, and why Kvantra exists.</p><span class="go">→</span></a>
-        <a href="/kvantra/" data-reveal><span class="label">02</span><strong>Kvantra</strong><p>How KvantraRank scores a stock, and how to use it.</p><span class="go">→</span></a>
-        <a href="/contact/" data-reveal><span class="label">03</span><strong>Contact</strong><p>Founder notes, press, partnerships, or a good idea.</p><span class="go">→</span></a>
+        <a href="/about/"><span class="label">01</span><strong>About</strong><p>Zurich, Ålesund, the Arctic, and how it all adds up.</p><span class="go">→</span></a>
+        <a href="/work/"><span class="label">02</span><strong>Work</strong><p>Kvantra, the military, and what I've built.</p><span class="go">→</span></a>
+        <a href="/contact/"><span class="label">03</span><strong>Contact</strong><p>Founder notes, running, or a good idea.</p><span class="go">→</span></a>
       </nav>
-    </section>
-
-    <!-- ============ CTA ============ -->
-    <section class="block cta" aria-labelledby="cta-title">
-      <h2 class="cta-title" id="cta-title" data-split>Have something <em>I&nbsp;should&nbsp;see?</em></h2>
-      <div class="cta-row" data-reveal>
-        <a class="btn btn-primary" href="/contact/">Write to me <span class="arrow">→</span></a>
-        <a class="cta-mail" href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a>
-      </div>
     </section>
 
   </main>
 
   <footer class="site-footer">
-    <div class="footer-top">
-      <p class="footer-cta">Co-founder of Kvantra. <a href="https://kvantra.ai" rel="noopener noreferrer">kvantra.ai</a></p>
-      <nav class="footer-links" aria-label="Footer">
-        <a href="https://github.com/LorenzAsk" rel="noopener noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/lorenz-ask-0382123b6" rel="noopener noreferrer">LinkedIn</a>
-        <a href="/privacy/">Privacy</a>
-      </nav>
+    <div class="footer-cta">
+      <div class="stack">
+        <p class="label" style="color: var(--ink)">Ålesund, Norway</p>
+        <h2 class="display" data-split>Let's talk.</h2>
+        <a class="email" href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a>
+        <a class="btn" href="/contact/">Write to me <span class="arrow">↗</span></a>
+      </div>
     </div>
-    <div class="footer-bottom">
-      <span>© <span data-year>2026</span> Lorenz Ask</span>
+    <div class="footer-meta">
+      <span>© <span data-year>2026</span> Lorenz Ask · Full speed ahead · <a href="/privacy/">Privacy</a></span>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <a class="icon-link" href="https://kvantra.ai" rel="noopener noreferrer" aria-label="Kvantra" title="Kvantra">
+          <span class="icon icon-kvantra" aria-hidden="true"></span>
+        </a>
+        <a class="icon-link" href="https://github.com/LorenzAsk" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+        <a class="icon-link" href="https://www.linkedin.com/in/lorenz-ask-0382123b6" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </nav>
       <a class="to-top" href="#" data-to-top>Back to top ↑</a>
     </div>
     <p class="wordmark" aria-hidden="true">Lorenz Ask</p>

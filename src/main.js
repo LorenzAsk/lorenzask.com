@@ -5,14 +5,16 @@ import 'lenis/dist/lenis.css';
 import './style.css';
 import { createLandscape } from './landscape.js';
 import { initMotion } from './motion.js';
-import { initRankDial } from './rank.js';
+import { initCube } from './cube.js';
+import { initUltra } from './ultra.js';
 import { initForms } from './forms.js';
 
 const canvas = document.querySelector('.landscape');
 if (canvas) createLandscape(canvas);
 
 initForms();
-initRankDial();
+initCube();
+initUltra();
 initMotion();
 
 document.querySelectorAll('[data-year]').forEach((el) => {

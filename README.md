@@ -16,8 +16,25 @@ Stop it with `Ctrl + C`.
 
 | File | What it is |
 |---|---|
-| `index.html` | All the text on the page. Look for `✏️` comments. |
-| `src/style.css` | Colours, fonts, spacing. Colours are at the top. |
+| `index.html` | The homepage: hero, Now, The long run, Off the clock, Moments. |
+| `about/`, `work/`, `contact/`, `privacy/` | The other pages, one folder each. |
+| `src/style.css` | Colours, fonts, spacing. The colours are at the top. |
 | `src/landscape.js` | The 3D landscape. The `SETTINGS` block at the top is safe to play with. |
-| `src/main.js` | Starts everything. |
-| `public/` | Files copied as-is, like the browser-tab icon. |
+| `src/motion.js` | Smooth scrolling, reveals, the header. |
+| `src/ultra.js` | The long run: your chapters drawn as a race you scroll through. The chapters themselves are the list in `index.html`. |
+| `src/cube.js` | The Rubik's cube on the homepage. |
+| `src/forms.js` | The contact form and copy buttons. |
+| `public/` | Files copied as they are: the tab icon and photos. |
+| `public/icons/` | The Kvantra mark used in the footer. |
+| `vercel.json` | Forwards the old /kvantra/ address to /work/. |
+
+## Updating the Now section
+
+Edit the list under `NOW` in `index.html`, and change "Updated November 2026"
+to the current month.
+
+## Adding a photo
+
+Put the photo in `public/photos/`, then in `index.html` under `PHOTOS`, replace
+a placeholder `<figure class="photo is-placeholder">` with one like the first:
+an `<img>` pointing at `/photos/your-photo.jpg`, and a `<figcaption>`.

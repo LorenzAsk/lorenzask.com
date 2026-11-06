@@ -3,26 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#060708">
-  <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('lorenzask-intro'))document.documentElement.classList.add('intro-seen')}catch(e){}</script>
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#0099FF">
+  <script>document.documentElement.classList.add('js')</script>
 
   <title>Contact · Lorenz Ask</title>
-  <meta name="description" content="Write to Lorenz Ask. Direct email, or Kvantra support for product questions.">
+  <meta name="description" content="Write to Lorenz Ask at lorenzask@kvantra.ai.">
   <meta property="og:title" content="Contact · Lorenz Ask">
-  <meta property="og:description" content="Write to Lorenz Ask.">
+  <meta property="og:description" content="Write to Lorenz Ask at lorenzask@kvantra.ai.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lorenzask.com/contact/">
+  <meta property="og:url" content="https://www.lorenzask.com/contact/">
   <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://www.lorenzask.com/contact/">
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="canonical" href="https://lorenzask.com/contact/">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body class="page-inner">
+<body>
 
   <a class="skip-link" href="#main">Skip to content</a>
 
@@ -30,84 +29,83 @@
     <a class="site-name" href="/">Lorenz Ask</a>
     <nav class="site-nav" aria-label="Primary">
       <a href="/about/">About</a>
-      <a href="/kvantra/">Kvantra</a>
-      <a href="/contact/" aria-current="page">Contact</a>
+      <a href="/work/">Work</a>
+      <a href="/contact/">Contact</a>
     </nav>
+    <a class="btn header-cta" href="/contact/">Let's talk <span class="arrow">↗</span></a>
   </header>
 
-  <main id="main" class="spread">
-    <p class="label">Contact</p>
-    <h1>Write <em>to me.</em></h1>
+  <main id="main">
+    <section class="page-hero">
+      <p class="label" style="color: var(--ink)">Contact</p>
+      <h1 class="display" data-split>Let's talk.</h1>
+      <p class="lede" data-reveal style="--d: 2">I read every note that lands here. English or Norwegian.</p>
+    </section>
 
-    <form class="write-form" id="write-form">
-      <label>
-        <span class="label">Subject</span>
-        <input type="text" name="subject" required maxlength="120" placeholder="What it is about" autocomplete="off">
-      </label>
-      <label>
-        <span class="label">Message</span>
-        <textarea name="message" required rows="6" maxlength="4000" placeholder="A question, an intro, or something I should see."></textarea>
-      </label>
-      <p class="write-note">Send opens your mail app, addressed to <a href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a> with this message ready to go.</p>
-      <button class="send-btn" type="submit" disabled>Send message</button>
-    </form>
+    <div class="page-body">
+      <form class="write-form" id="write-form">
+        <label>
+          <span class="label">Subject</span>
+          <input type="text" name="subject" required maxlength="120" placeholder="What it's about" autocomplete="off">
+        </label>
+        <label>
+          <span class="label">Message</span>
+          <textarea name="message" required rows="6" maxlength="4000" placeholder="A question, an intro, a race tip, or something I should see."></textarea>
+        </label>
+        <p class="write-note">Send opens your own mail app, addressed to <a href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a> with this message ready to go.</p>
+        <button class="send-btn" type="submit" disabled>Send message</button>
+      </form>
 
-    <dl class="facts">
-      <div>
-        <dt>Language</dt>
-        <dd>English / Norwegian</dd>
-      </div>
-      <div>
-        <dt>I read</dt>
-        <dd>Every message</dd>
-      </div>
-      <div>
-        <dt>Kvantra help</dt>
-        <dd>support@kvantra.ai</dd>
-      </div>
-    </dl>
-
-    <p class="lede">I read every note that lands here. Product questions, bugs, and account help are faster through Kvantra support, where the rest of the team can pick them up.</p>
-
-    <h2 class="spread-sub">The addresses.</h2>
-    <ul class="address-cards">
-      <li>
-        <h3>Direct</h3>
-        <p>Founder notes, press, partnerships, or anything that should reach me.</p>
-        <div class="address-row">
-          <a href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a>
-          <button type="button" class="copy-btn" data-copy="lorenzask@kvantra.ai">Copy</button>
-        </div>
-      </li>
-      <li>
-        <h3>Kvantra</h3>
-        <p>Questions about the product, data, bugs, or your account.</p>
-        <div class="address-row">
-          <a href="https://kvantra.ai/support" rel="noopener noreferrer">kvantra.ai/support</a>
-        </div>
-      </li>
-      <li>
-        <h3>Elsewhere</h3>
-        <p>Public work and a slower inbox.</p>
-        <div class="address-row">
-          <a href="https://github.com/LorenzAsk" rel="noopener noreferrer">GitHub</a>
-          <a href="https://www.linkedin.com/in/lorenz-ask-0382123b6" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </li>
-    </ul>
+      <ul class="address-cards">
+        <li>
+          <h3>Direct</h3>
+          <p>Founder notes, press, partnerships, or anything that should reach me.</p>
+          <div class="address-row">
+            <a href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a>
+            <button type="button" class="copy-btn" data-copy="lorenzask@kvantra.ai">Copy</button>
+          </div>
+        </li>
+        <li>
+          <h3>Kvantra</h3>
+          <p>Questions about the product, data, bugs or your account go faster through support.</p>
+          <div class="address-row">
+            <a href="https://kvantra.ai/support" rel="noopener noreferrer">kvantra.ai/support</a>
+          </div>
+        </li>
+        <li>
+          <h3>Elsewhere</h3>
+          <p>Public work and a slower inbox.</p>
+          <div class="address-row">
+            <a href="https://github.com/LorenzAsk" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/lorenz-ask-0382123b6" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </li>
+      </ul>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-top">
-      <p class="footer-cta">Co-founder of Kvantra. <a href="https://kvantra.ai" rel="noopener noreferrer">kvantra.ai</a></p>
-      <nav class="footer-links" aria-label="Footer">
-        <a href="https://github.com/LorenzAsk" rel="noopener noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/lorenz-ask-0382123b6" rel="noopener noreferrer">LinkedIn</a>
-        <a href="/privacy/">Privacy</a>
-      </nav>
+    <div class="footer-cta">
+      <div class="stack">
+        <p class="label" style="color: var(--ink)">Ålesund, Norway</p>
+        <h2 class="display" data-split>Let's talk.</h2>
+        <a class="email" href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a>
+        <a class="btn" href="/contact/">Write to me <span class="arrow">↗</span></a>
+      </div>
     </div>
-    <div class="footer-bottom">
-      <span>© <span data-year>2026</span> Lorenz Ask</span>
+    <div class="footer-meta">
+      <span>© <span data-year>2026</span> Lorenz Ask · Full speed ahead · <a href="/privacy/">Privacy</a></span>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <a class="icon-link" href="https://kvantra.ai" rel="noopener noreferrer" aria-label="Kvantra" title="Kvantra">
+          <span class="icon icon-kvantra" aria-hidden="true"></span>
+        </a>
+        <a class="icon-link" href="https://github.com/LorenzAsk" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+        <a class="icon-link" href="https://www.linkedin.com/in/lorenz-ask-0382123b6" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </nav>
       <a class="to-top" href="#" data-to-top>Back to top ↑</a>
     </div>
     <p class="wordmark" aria-hidden="true">Lorenz Ask</p>
