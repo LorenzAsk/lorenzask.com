@@ -136,7 +136,8 @@ function initMagnetic() {
    It trails slightly behind the cursor (moving 10% of the way each frame),
    which makes it feel like light rather than a sticker. */
 function initGlow() {
-  if (!finePointer || reducedMotion) return;
+  // Pages can opt out with <body data-no-glow> (Contact and Privacy do).
+  if (!finePointer || reducedMotion || document.body.hasAttribute('data-no-glow')) return;
 
   const glow = document.createElement('div');
   glow.className = 'cursor-glow';
