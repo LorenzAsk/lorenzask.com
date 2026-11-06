@@ -162,15 +162,20 @@ button, input, textarea { font: inherit; color: inherit; }
 .header-cta { justify-self: end; }
 
 /* ==========================================================================
-   CURSOR GLOW — a soft light-blue light under the page content, following
-   the mouse (added by src/motion.js on computers with a mouse).
-   z-index -1 puts it above the page background but below everything else.
+   CURSOR GLOW — a soft light-blue light following the mouse (added by
+   src/motion.js on computers with a mouse).
+
+   Layering, bottom to top:
+     0  section backgrounds (the blue hero, the footer sky, the 3D lines)
+     1  the glow
+     2  all text, buttons and cards
+   so the glow flows smoothly across section edges but never covers text.
    ========================================================================== */
 
 .cursor-glow {
   position: fixed;
   top: 0; left: 0;
-  z-index: -1;
+  z-index: 1;
   width: 280px; height: 280px;
   margin: -140px 0 0 -140px;
   border-radius: 50%;
@@ -180,6 +185,15 @@ button, input, textarea { font: inherit; color: inherit; }
   transition: opacity 0.8s var(--ease-out);
 }
 .cursor-glow.is-visible { opacity: 1; }
+
+/* Everything readable sits on layer 2, above the glow. Sections without a
+   background of their own go up as a whole; sections with one (hero, page
+   heroes, footer) keep the background below and lift only what's inside. */
+.block, .ultra, .page-body,
+.hero-inner, .page-hero > *, .site-footer > * {
+  position: relative;
+  z-index: 2;
+}
 
 /* ==========================================================================
    BUTTONS
@@ -694,6 +708,8 @@ button, input, textarea { font: inherit; color: inherit; }
 .footer-cta .stack { display: flex; flex-direction: column; align-items: center; }
 
 .footer-meta {
+  position: relative;
+  z-index: 1;
   max-width: var(--max);
   margin: clamp(4rem, 10vh, 6rem) auto 0;
   padding: 1.5rem var(--gutter) 0;
@@ -708,6 +724,7 @@ button, input, textarea { font: inherit; color: inherit; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+.footer-end { display: flex; align-items: center; gap: 1.5rem; }
 .footer-links { display: flex; align-items: center; gap: 1.4rem; }
 .footer-meta a:not(.icon-link):hover, .to-top:hover { text-decoration: underline; text-underline-offset: 4px; }
 
@@ -734,6 +751,7 @@ button, input, textarea { font: inherit; color: inherit; }
   white-space: nowrap;
   color: #fff;
   user-select: none;
+  pointer-events: none;
 }
 
 /* ==========================================================================
