@@ -2,177 +2,373 @@
    DATA LANDSCAPE
    ==========================================================================
 
-   How it works, in plain words:
+   A field of fine lines, row behind row, shaped into hills by a noise
+   function. Unlike the first version, every height is now computed on the
+   graphics chip (in the "vertex shader" below), so we can afford ten times
+   the detail and still run at full frame rate.
 
-   We draw a few dozen horizontal lines, one behind the other, like rows on
-   a field. Every point on every line gets a height from `heightAt()` — a
-   mix of slow sine waves — so together the lines trace a rolling surface.
-   Each frame we move time forward a little and recompute the heights, so
-   the surface slowly shifts. Fog fades the far rows into the background
-   colour, which is what gives it depth. The camera leans a little towards
-   your mouse.
+   Four things happen on top of the hills:
+   - the highest peaks glow in the accent colour, like top-ranked stocks
+   - a band of light sweeps through the field, like a scan of the market
+   - the surface swells and ripples under your cursor
+   - scrolling flies the camera forward and down into it
    ========================================================================== */
 
 import * as THREE from 'three';
 
 // ---- Tunable knobs. Change a number, save, and the page updates. ----
 const SETTINGS = {
-  rows: 56,            // how many lines, front to back
-  pointsPerRow: 180,   // how smooth each line is
-  width: 36,           // how wide the field is
-  depth: 24,           // how far back it goes
-  hillHeight: 0.9,     // how tall the hills are
-  speed: 0.16,         // how fast the surface shifts
-  mouseTilt: 0.12,     // how much the camera follows your mouse (0 = not at all)
-  lineOpacity: 0.5,    // how strong the lines are
+  rows: 96,          // lines front to back
+  cols: 260,         // points along each line (smoothness)
+  width: 52,         // how wide the field is
+  depth: 44,         // how far back it goes
+  hillHeight: 1.25,  // how tall the hills are
+  drift: 0.05,       // how fast the hills reshape
+  scanSpeed: 5.5,    // how fast the light band travels (units per second)
+  mouseLift: 1.7,    // how much the surface swells under the cursor
+  mouseRadius: 3.4,  // how wide that swell is
+  lineOpacity: 0.62, // base strength of the lines
+  dotEvery: 5,       // a glowing dot every N points on every second line
 };
 
-// The surface itself: give it an x (left/right), a z (front/back) and a
-// time, and it returns a height. Three waves at different sizes and speeds
-// stacked together look organic instead of repetitive.
-function heightAt(x, z, t) {
-  const big    = Math.sin(x * 0.32 + t) * Math.cos(z * 0.28 - t * 0.7);
-  const medium = Math.sin((x + z) * 0.6 - t * 1.3) * 0.45;
-  const small  = Math.sin(x * 1.3 - z * 0.9 + t * 1.7) * 0.15;
+/* Simplex noise by Ashima Arts and Stefan Gustavson (MIT licence).
+   Smooth random hills: nearby points get similar values, far ones don't. */
+const NOISE = /* glsl */ `
+  vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+  vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+  vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
+  vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
 
-  // Taller in the middle, flatter towards the left and right edges.
-  const centre = 0.55 + 0.45 * Math.exp(-(x * x) / 60);
+  float snoise(vec3 v) {
+    const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+    vec3 i  = floor(v + dot(v, C.yyy));
+    vec3 x0 = v - i + dot(i, C.xxx);
+    vec3 g  = step(x0.yzx, x0.xyz);
+    vec3 l  = 1.0 - g;
+    vec3 i1 = min(g.xyz, l.zxy);
+    vec3 i2 = max(g.xyz, l.zxy);
+    vec3 x1 = x0 - i1 + C.xxx;
+    vec3 x2 = x0 - i2 + C.yyy;
+    vec3 x3 = x0 - D.yyy;
+    i = mod289(i);
+    vec4 p = permute(permute(permute(
+              i.z + vec4(0.0, i1.z, i2.z, 1.0))
+            + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+            + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+    float n_ = 0.142857142857;
+    vec3 ns = n_ * D.wyz - D.xzx;
+    vec4 j  = p - 49.0 * floor(p * ns.z * ns.z);
+    vec4 x_ = floor(j * ns.z);
+    vec4 y_ = floor(j - 7.0 * x_);
+    vec4 x  = x_ * ns.x + ns.yyyy;
+    vec4 y  = y_ * ns.x + ns.yyyy;
+    vec4 h  = 1.0 - abs(x) - abs(y);
+    vec4 b0 = vec4(x.xy, y.xy);
+    vec4 b1 = vec4(x.zw, y.zw);
+    vec4 s0 = floor(b0) * 2.0 + 1.0;
+    vec4 s1 = floor(b1) * 2.0 + 1.0;
+    vec4 sh = -step(h, vec4(0.0));
+    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+    vec3 p0 = vec3(a0.xy, h.x);
+    vec3 p1 = vec3(a0.zw, h.y);
+    vec3 p2 = vec3(a1.xy, h.z);
+    vec3 p3 = vec3(a1.zw, h.w);
+    vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+    p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+    m = m * m;
+    return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
+  }
+`;
 
-  return (big + medium + small) * centre * SETTINGS.hillHeight;
-}
+/* The shape of the land, shared by the lines and the dots.
+   Runs once per point, every frame, on the graphics chip. */
+const TERRAIN = /* glsl */ `
+  uniform float uTime;
+  uniform float uHill;
+  uniform float uDrift;
+  uniform vec2  uMouse;
+  uniform float uMouseAmt;
+  uniform float uMouseLift;
+  uniform float uMouseRadius;
+  uniform float uScanZ;
+  uniform float uHalfWidth;
+
+  varying float vHeight;
+  varying float vDepth;
+  varying float vScan;
+  varying float vEdge;
+
+  float terrain(vec2 p) {
+    float t = uTime * uDrift;
+    float h = snoise(vec3(p * 0.075, t)) * 1.0;
+    h += snoise(vec3(p * 0.19 + 3.7, t * 1.5)) * 0.38;
+    h += snoise(vec3(p * 0.52 - 7.1, t * 2.2)) * 0.1;
+    h += pow(max(h, 0.0), 2.0) * 0.55;          // sharpen the peaks
+    return h * uHill;
+  }
+
+  float cursorLift(vec2 p) {
+    float d = distance(p, uMouse);
+    float swell = exp(-(d * d) / (uMouseRadius * uMouseRadius)) * uMouseLift;
+    float ripple = sin(d * 2.3 - uTime * 3.2) * exp(-d * 0.42) * 0.22;
+    return (swell + ripple) * uMouseAmt;
+  }
+
+  vec4 placePoint(vec3 position) {
+    vec3 p = position;
+    p.y = terrain(p.xz) + cursorLift(p.xz);
+
+    vHeight = p.y;
+    vScan   = exp(-pow(p.z - uScanZ, 2.0) * 0.3);
+    vEdge   = 1.0 - smoothstep(0.55, 1.0, abs(p.x) / uHalfWidth);
+
+    vec4 mv = modelViewMatrix * vec4(p, 1.0);
+    vDepth  = -mv.z;
+    return projectionMatrix * mv;
+  }
+`;
+
+/* Colour and fade, shared by both layers. */
+const SHADE = /* glsl */ `
+  uniform vec3  uBase;
+  uniform vec3  uAccent;
+  uniform float uFogNear;
+  uniform float uFogFar;
+
+  varying float vHeight;
+  varying float vDepth;
+  varying float vScan;
+  varying float vEdge;
+
+  float peak()       { return smoothstep(0.55, 1.7, vHeight); }
+  float visibility() {
+    float far  = 1.0 - smoothstep(uFogNear, uFogFar, vDepth);   // fade into the distance
+    float near = smoothstep(1.5, 4.5, vDepth);                   // and don't block the camera
+    return far * near * vEdge;
+  }
+  vec3 tint() { return mix(mix(uBase, uAccent, peak()), uAccent, vScan * 0.85); }
+`;
 
 export function createLandscape(canvas) {
-  // Some old devices can't do WebGL. Then we simply show no landscape.
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   } catch (error) {
-    canvas.remove();
+    canvas.remove(); // no WebGL: the page still works, just without the landscape
     return;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  const isSmall = window.innerWidth < 760;
 
-  // ---- Scene, camera, fog ----
+  const rows = isSmall ? 64 : SETTINGS.rows;
+  const cols = isSmall ? 150 : SETTINGS.cols;
+  const zFront = 6;
+
+  // ---- Scene and camera ----
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0xffffff, 8, 28);
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 120);
+  const cameraHome = new THREE.Vector3(0, 4.6, 10.5);
+  const lookHome = new THREE.Vector3(0, -1.6, -3);
+  const look = lookHome.clone();
 
-  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-  const cameraHome = new THREE.Vector3(0, 4.6, 11);
-  const lookTarget = new THREE.Vector3(0, 0, -2);
-  camera.position.copy(cameraHome);
-  camera.lookAt(lookTarget);
+  // ---- Colours come from the CSS tokens ----
+  const styles = getComputedStyle(document.documentElement);
+  const color = (name, fallback) => new THREE.Color(styles.getPropertyValue(name).trim() || fallback);
 
-  // ---- The lines ----
-  // Phones get fewer, so it stays smooth on smaller chips.
-  const isSmall = window.innerWidth < 700;
-  const rows = isSmall ? Math.round(SETTINGS.rows * 0.6) : SETTINGS.rows;
-  const cols = isSmall ? Math.round(SETTINGS.pointsPerRow * 0.6) : SETTINGS.pointsPerRow;
+  const uniforms = {
+    uTime:        { value: 0 },
+    uHill:        { value: SETTINGS.hillHeight },
+    uDrift:       { value: SETTINGS.drift },
+    uMouse:       { value: new THREE.Vector2(0, -4) },
+    uMouseAmt:    { value: 0 },
+    uMouseLift:   { value: SETTINGS.mouseLift },
+    uMouseRadius: { value: SETTINGS.mouseRadius },
+    uScanZ:       { value: -100 },
+    uHalfWidth:   { value: SETTINGS.width / 2 },
+    uBase:        { value: color('--land-base', '#4a535b') },
+    uAccent:      { value: color('--accent', '#8dffc4') },
+    uFogNear:     { value: 9 },
+    uFogFar:      { value: 40 },
+    uOpacity:     { value: SETTINGS.lineOpacity },
+    uPixelRatio:  { value: 1 },
+  };
 
-  const material = new THREE.LineBasicMaterial({
-    transparent: true,
-    opacity: SETTINGS.lineOpacity,
-  });
-
-  const lines = [];
+  // ---- Layer 1: the lines ----
+  const linePositions = [];
   for (let r = 0; r < rows; r++) {
-    // Row 0 is closest to the camera, the last row is furthest away.
-    const z = 4 - (r / (rows - 1)) * SETTINGS.depth;
-
-    const positions = new Float32Array(cols * 3);
-    for (let c = 0; c < cols; c++) {
-      positions[c * 3]     = -SETTINGS.width / 2 + (c / (cols - 1)) * SETTINGS.width; // x
-      positions[c * 3 + 2] = z;                                                       // z
-      // y (height) is filled in every frame by updateHeights()
+    const z = zFront - (r / (rows - 1)) * SETTINGS.depth;
+    for (let c = 0; c < cols - 1; c++) {
+      const x0 = -SETTINGS.width / 2 + (c / (cols - 1)) * SETTINGS.width;
+      const x1 = -SETTINGS.width / 2 + ((c + 1) / (cols - 1)) * SETTINGS.width;
+      linePositions.push(x0, 0, z, x1, 0, z);
     }
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const line = new THREE.Line(geometry, material);
-    scene.add(line);
-    lines.push(line);
   }
+  const lineGeometry = new THREE.BufferGeometry();
+  lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
 
-  function updateHeights(t) {
-    for (const line of lines) {
-      const attribute = line.geometry.attributes.position;
-      const p = attribute.array;
-      for (let i = 0; i < p.length; i += 3) {
-        p[i + 1] = heightAt(p[i], p[i + 2], t);
+  const lineMaterial = new THREE.ShaderMaterial({
+    uniforms,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    vertexShader: NOISE + TERRAIN + /* glsl */ `
+      void main() { gl_Position = placePoint(position); }
+    `,
+    fragmentShader: SHADE + /* glsl */ `
+      uniform float uOpacity;
+      void main() {
+        float a = uOpacity * (0.75 + peak() * 1.4 + vScan * 1.6) * visibility();
+        gl_FragColor = vec4(tint(), a); // additive blending multiplies by alpha itself
       }
-      attribute.needsUpdate = true; // tells Three.js to send the new numbers to the graphics chip
+    `,
+  });
+  const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+  lines.frustumCulled = false;
+  scene.add(lines);
+
+  // ---- Layer 2: glowing dots on the grid ----
+  const dotPositions = [];
+  for (let r = 0; r < rows; r += 2) {
+    const z = zFront - (r / (rows - 1)) * SETTINGS.depth;
+    for (let c = 0; c < cols; c += SETTINGS.dotEvery) {
+      dotPositions.push(-SETTINGS.width / 2 + (c / (cols - 1)) * SETTINGS.width, 0, z);
+    }
+  }
+  const dotGeometry = new THREE.BufferGeometry();
+  dotGeometry.setAttribute('position', new THREE.Float32BufferAttribute(dotPositions, 3));
+
+  const dotMaterial = new THREE.ShaderMaterial({
+    uniforms,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    vertexShader: NOISE + TERRAIN + /* glsl */ `
+      uniform float uPixelRatio;
+      void main() {
+        gl_Position = placePoint(position);
+        float grow = 1.0 + smoothstep(0.55, 1.7, vHeight) * 2.2 + vScan * 1.5;
+        gl_PointSize = 34.0 * uPixelRatio * grow / max(vDepth, 1.0);
+      }
+    `,
+    fragmentShader: SHADE + /* glsl */ `
+      void main() {
+        float d = length(gl_PointCoord - 0.5);
+        float disc = smoothstep(0.5, 0.0, d);
+        float a = disc * (0.22 + peak() * 1.2 + vScan * 1.0) * visibility();
+        gl_FragColor = vec4(tint(), a); // additive blending multiplies by alpha itself
+      }
+    `,
+  });
+  const dots = new THREE.Points(dotGeometry, dotMaterial);
+  dots.frustumCulled = false;
+  scene.add(dots);
+
+  // ---- The cursor: where is it on the ground? ----
+  const raycaster = new THREE.Raycaster();
+  const ground = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+  const pointer = new THREE.Vector2();
+  const hit = new THREE.Vector3();
+  const mouseTarget = new THREE.Vector2(0, -4);
+  const tilt = { x: 0, y: 0, tx: 0, ty: 0 };
+  let mouseAmtTarget = 0;
+
+  function onPointerMove(event) {
+    const rect = canvas.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    tilt.tx = pointer.x;
+    tilt.ty = pointer.y;
+
+    raycaster.setFromCamera(pointer, camera);
+    if (raycaster.ray.intersectPlane(ground, hit)) {
+      mouseTarget.set(hit.x, hit.z);
+      mouseAmtTarget = 1;
     }
   }
 
-  // ---- Colours come from the CSS tokens, so light/dark mode just works ----
-  function applyColors() {
-    const styles = getComputedStyle(document.documentElement);
-    material.color.set(styles.getPropertyValue('--line').trim());
-    scene.fog.color.set(styles.getPropertyValue('--bg').trim());
+  if (!isTouch) {
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    document.documentElement.addEventListener('pointerleave', () => { mouseAmtTarget = 0; });
   }
 
-  // ---- Mouse: we remember where it is, and ease the camera towards it ----
-  const mouse = { x: 0, y: 0 };
-  const eased = { x: 0, y: 0 };
-
-  window.addEventListener('pointermove', (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;  // -1 (left) to 1 (right)
-    mouse.y = (event.clientY / window.innerHeight) * 2 - 1; // -1 (top) to 1 (bottom)
-  }, { passive: true });
+  // ---- Size ----
+  function resize() {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    if (!width || !height) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, isSmall ? 1.5 : 2);
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(width, height, false);
+    uniforms.uPixelRatio.value = dpr;
+    camera.aspect = width / height;
+    // Narrow screens: pull back a little so the field still fills the frame.
+    camera.fov = camera.aspect < 0.8 ? 58 : 42;
+    camera.updateProjectionMatrix();
+    if (reducedMotion) render();
+  }
 
   // ---- One frame ----
-  const clock = new THREE.Clock();
+  const startedAt = performance.now();
+  const fieldBack = zFront - SETTINGS.depth;
 
   function render() {
     renderer.render(scene, camera);
   }
 
   function frame() {
-    updateHeights(clock.getElapsedTime() * SETTINGS.speed);
+    const t = (performance.now() - startedAt) / 1000; // seconds since the page opened
+    uniforms.uTime.value = t;
 
-    // Move 4% of the remaining distance each frame — a smooth, weighty follow.
-    eased.x += (mouse.x - eased.x) * 0.04;
-    eased.y += (mouse.y - eased.y) * 0.04;
+    // The light band travels from the back of the field to the front, then starts over.
+    uniforms.uScanZ.value = fieldBack + ((t * SETTINGS.scanSpeed) % (SETTINGS.depth + 8));
 
-    camera.position.x = cameraHome.x + eased.x * SETTINGS.mouseTilt * 10;
-    camera.position.y = cameraHome.y - eased.y * SETTINGS.mouseTilt * 6;
-    camera.lookAt(lookTarget);
+    // Touch screens have no cursor, so the swell drifts around on its own.
+    if (isTouch) {
+      mouseTarget.set(Math.sin(t * 0.35) * 6, -2 + Math.cos(t * 0.27) * 4);
+      mouseAmtTarget = 0.7;
+    }
+
+    // Ease everything towards its target: smooth, weighty movement.
+    uniforms.uMouse.value.lerp(mouseTarget, 0.08);
+    uniforms.uMouseAmt.value += (mouseAmtTarget - uniforms.uMouseAmt.value) * 0.05;
+    tilt.x += (tilt.tx - tilt.x) * 0.04;
+    tilt.y += (tilt.ty - tilt.y) * 0.04;
+
+    // Scrolling through the hero flies the camera forward and down.
+    const hero = canvas.parentElement;
+    const scroll = Math.min(Math.max(window.scrollY / (hero.offsetHeight || 1), 0), 1);
+
+    camera.position.set(
+      cameraHome.x + tilt.x * 0.9,
+      cameraHome.y + tilt.y * 0.35 - scroll * 1.6,
+      cameraHome.z - scroll * 6,
+    );
+    look.set(lookHome.x + tilt.x * 0.6, lookHome.y - scroll * 0.8, lookHome.z - scroll * 4);
+    camera.lookAt(look);
 
     render();
   }
 
-  // ---- Keep the drawing the same size as the canvas on screen ----
-  function resize() {
-    const { clientWidth: width, clientHeight: height } = canvas;
-    if (width === 0 || height === 0) return;
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    if (reducedMotion) render();
-  }
-
-  new ResizeObserver(resize).observe(canvas);
-
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    applyColors();
-    if (reducedMotion) render();
-  });
-
   // ---- Start ----
-  applyColors();
+  camera.position.copy(cameraHome);
+  camera.lookAt(look);
+  new ResizeObserver(resize).observe(canvas);
   resize();
 
   if (reducedMotion) {
-    // Visitors who asked their device for less motion get one still frame.
-    updateHeights(0);
+    // One still frame, picked for a nice composition.
+    uniforms.uTime.value = 14;
+    uniforms.uScanZ.value = -10;
     render();
     return;
   }
 
-  // Only animate while the landscape is actually on screen. Scrolled past it,
-  // it stops drawing entirely — no wasted battery.
+  // Only draw while the hero is on screen. Scrolled past: zero work.
   new IntersectionObserver(([entry]) => {
     renderer.setAnimationLoop(entry.isIntersecting ? frame : null);
   }).observe(canvas);

@@ -1,7 +1,7 @@
-# Installed libraries — recreated by `npm install`, never committed
+# Installed libraries: recreated by `npm install`, never committed
 node_modules/
 
-# The packaged site Vite builds for hosting — recreated by `npm run build`
+# The packaged site Vite builds for hosting: recreated by `npm run build`
 dist/
 
 # macOS clutter

@@ -3,77 +3,186 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#060708">
+  <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('lorenzask-intro'))document.documentElement.classList.add('intro-seen')}catch(e){}</script>
 
   <title>Lorenz Ask</title>
-  <!-- ✏️ YOUR TEXT: the line Google shows under your name in search results. -->
-  <meta name="description" content="Lorenz Ask, founder of Kvantra.">
+  <meta name="description" content="Lorenz Ask is co-founder of Kvantra, the stock analysis platform that scores every stock 0–100 against its real peers.">
+  <meta property="og:title" content="Lorenz Ask">
+  <meta property="og:description" content="Co-founder of Kvantra. Building the investing tool I wanted at 12.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lorenzask.com">
+  <meta name="twitter:card" content="summary">
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://lorenzask.com">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
 
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- First visit only: counts 000 → 100, then lifts away (see src/motion.js). -->
+  <div class="intro" aria-hidden="true">
+    <div class="intro-count">000</div>
+    <div class="intro-meta">
+      <span class="label">Lorenz Ask</span>
+      <span class="label">Calibrating score</span>
+    </div>
+    <div class="intro-track"><div class="intro-bar"></div></div>
+  </div>
+
   <header class="site-header">
     <a class="site-name" href="/">Lorenz Ask</a>
-    <nav class="site-nav">
-      <a href="#about">About</a>
-      <a href="#kvantra">Kvantra</a>
-      <a href="#contact">Contact</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/about/">About</a>
+      <a href="/kvantra/">Kvantra</a>
+      <a href="/contact/">Contact</a>
     </nav>
   </header>
 
-  <main>
+  <main id="main">
 
+    <!-- ============ HERO ============ -->
     <section class="hero">
-      <!-- The 3D data landscape is drawn into this canvas by src/landscape.js -->
       <canvas class="landscape" aria-hidden="true"></canvas>
 
-      <div class="hero-content">
-        <p class="label">Founder, Kvantra</p>
-        <!-- ✏️ YOUR TEXT: one sentence about what you do or care about. -->
-        <h1>[Your one sentence goes here.]</h1>
+      <div class="hero-inner">
+        <p class="hero-kicker label" data-reveal><span class="dot"></span>Co-founder, Kvantra</p>
+
+        <h1 class="hero-title" data-split>Building the investing tool I wanted <em>at&nbsp;12.</em></h1>
+
+        <div class="hero-foot">
+          <p class="hero-sub" data-reveal style="--d: 3">Kvantra scores every stock from 0 to 100 against the companies it actually competes with. One number, and the reasons behind it.</p>
+          <div class="hero-actions" data-reveal style="--d: 4">
+            <a class="btn btn-primary" href="/kvantra/">See Kvantra <span class="arrow">→</span></a>
+            <a class="btn" href="/contact/">Write to me</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>KvantraRank 0–100</span><span>60,000+ companies</span><span>Quality</span><span>Value</span><span>Momentum</span><span>Ranked against real peers</span>
+          <span>KvantraRank 0–100</span><span>60,000+ companies</span><span>Quality</span><span>Value</span><span>Momentum</span><span>Ranked against real peers</span>
+        </div>
       </div>
     </section>
 
-    <section id="about" class="section">
-      <p class="label">About</p>
-      <div class="section-body">
-        <!-- ✏️ YOUR TEXT: a few lines about you. Each <p> is one paragraph. -->
-        <p>[A few lines about you: your background, and how you ended up founding Kvantra.]</p>
+    <!-- ============ ORIGIN ============ -->
+    <section class="block origin" aria-labelledby="origin-title">
+      <div class="block-head">
+        <h2 class="label" id="origin-title">01 — Origin</h2>
+        <span class="label">Zurich → Kvantra</span>
+      </div>
+
+      <div class="origin-grid">
+        <div>
+          <p class="scrub" data-scrub>I started investing at twelve. Everyone around me was guessing, with no method and no yardstick. So I built the one I was missing, and called it <em>KvantraRank.</em></p>
+          <a class="arrow-link origin-more" href="/about/" data-reveal>The longer version</a>
+        </div>
+
+        <figure class="origin-photo">
+          <img src="/lorenz-ask.jpg" alt="Lorenz Ask presenting Kvantra on a large screen, showing a stock with a KvantraRank of 80." width="1328" height="2000" loading="lazy" decoding="async">
+          <figcaption class="label">Presenting Kvantra, July 2026</figcaption>
+        </figure>
       </div>
     </section>
 
-    <section id="kvantra" class="section">
-      <p class="label">Kvantra</p>
-      <div class="section-body">
-        <!-- ✏️ YOUR TEXT: Kvantra in one sentence, and the real web address. -->
-        <p>[Kvantra in one sentence.]</p>
-        <a class="arrow-link" href="#">[kvantra website]</a>
+    <!-- ============ KVANTRARANK ============ -->
+    <section class="block rank" aria-labelledby="rank-title">
+      <div class="block-head">
+        <span class="label">02 — KvantraRank</span>
+        <span class="label">Drag the dial</span>
       </div>
+
+      <div class="rank-grid">
+        <div>
+          <div class="dial" data-dial>
+            <svg viewBox="0 0 400 400" aria-hidden="true">
+              <defs>
+                <radialGradient id="dial-glow">
+                  <stop offset="0%" stop-color="#8dffc4" stop-opacity="0.16" />
+                  <stop offset="70%" stop-color="#8dffc4" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <circle class="dial-glow" cx="200" cy="200" r="160" />
+              <circle class="dial-track" cx="200" cy="200" r="150" />
+            </svg>
+            <div class="dial-readout">
+              <span class="dial-value" aria-hidden="true">80</span>
+              <span class="label">KvantraRank</span>
+            </div>
+          </div>
+          <div class="dial-control">
+            <label class="sr-only" for="dial-input">Try a KvantraRank score</label>
+            <input id="dial-input" type="range" min="0" max="100" value="80" data-dial-input>
+            <p class="dial-caption">A score of <strong data-dial-percent>80%</strong> means a stock ranks higher than that share of its peers.</p>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="rank-title" id="rank-title" data-split>One number. <em>Three reasons.</em></h2>
+          <p class="rank-lede" data-reveal>Every stock gets a score from 0 to 100, ranked only against its real peers. Open it, and you see exactly where it comes from.</p>
+
+          <ul class="factor-rows">
+            <li data-reveal><span class="label">Q</span><div><h3>Quality</h3><p>Profitability, cash generation and balance-sheet strength.</p></div></li>
+            <li data-reveal><span class="label">V</span><div><h3>Value</h3><p>How cheaply a company is priced relative to its fundamentals.</p></div></li>
+            <li data-reveal><span class="label">M</span><div><h3>Momentum</h3><p>Whether it has outperformed its peers, including the trend in analyst expectations.</p></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <dl class="numbers">
+        <div data-reveal><dt data-count="60000" data-suffix="+">60,000+</dt><dd class="label">Companies scored</dd></div>
+        <div data-reveal><dt>0–100</dt><dd class="label">One score per stock</dd></div>
+        <div data-reveal><dt data-count="3">3</dt><dd class="label">Factors behind it</dd></div>
+      </dl>
     </section>
 
-    <section id="contact" class="section">
-      <p class="label">Contact</p>
-      <div class="section-body">
-        <!-- ✏️ YOUR TEXT: the email address you want people to use. -->
-        <a class="email" href="mailto:you@example.com">[your email]</a>
-        <ul class="links">
-          <li><a href="https://github.com/LorenzAsk">GitHub</a></li>
-          <!-- ✏️ YOUR LINKS: replace # with your profile addresses. -->
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">X</a></li>
-        </ul>
+    <!-- ============ INDEX ============ -->
+    <section class="block" aria-labelledby="index-title">
+      <div class="block-head">
+        <h2 class="label" id="index-title">03 — Index</h2>
+        <span class="label">Three pages</span>
+      </div>
+
+      <nav class="index-list" aria-label="Pages">
+        <a href="/about/" data-reveal><span class="label">01</span><strong>About</strong><p>Zurich, investing at twelve, and why Kvantra exists.</p><span class="go">→</span></a>
+        <a href="/kvantra/" data-reveal><span class="label">02</span><strong>Kvantra</strong><p>How KvantraRank scores a stock, and how to use it.</p><span class="go">→</span></a>
+        <a href="/contact/" data-reveal><span class="label">03</span><strong>Contact</strong><p>Founder notes, press, partnerships, or a good idea.</p><span class="go">→</span></a>
+      </nav>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="block cta" aria-labelledby="cta-title">
+      <h2 class="cta-title" id="cta-title" data-split>Have something <em>I&nbsp;should&nbsp;see?</em></h2>
+      <div class="cta-row" data-reveal>
+        <a class="btn btn-primary" href="/contact/">Write to me <span class="arrow">→</span></a>
+        <a class="cta-mail" href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a>
       </div>
     </section>
 
   </main>
 
   <footer class="site-footer">
-    <span>© <span data-year>2026</span> Lorenz Ask</span>
+    <div class="footer-top">
+      <p class="footer-cta">Co-founder of Kvantra. <a href="https://kvantra.ai" rel="noopener noreferrer">kvantra.ai</a></p>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="https://github.com/LorenzAsk" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/lorenz-ask-0382123b6" rel="noopener noreferrer">LinkedIn</a>
+        <a href="/privacy/">Privacy</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Lorenz Ask</span>
+      <a class="to-top" href="#" data-to-top>Back to top ↑</a>
+    </div>
+    <p class="wordmark" aria-hidden="true">Lorenz Ask</p>
   </footer>
 
   <script type="module" src="/src/main.js"></script>
