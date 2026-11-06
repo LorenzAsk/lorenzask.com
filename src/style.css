@@ -778,23 +778,6 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .signoff { margin-top: clamp(3rem, 8vh, 5rem); font-size: clamp(3rem, 8vw, 6rem); color: var(--sky); }
 
-/* ---- Work ---- */
-
-.work-group + .work-group { margin-top: clamp(4rem, 10vh, 6rem); }
-.work-group > .label { display: block; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); }
-.work-item {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.5rem 2rem;
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--line);
-}
-.work-item h2 { font-size: clamp(2.4rem, 5vw, 4rem); }
-.work-item .role { font-weight: 600; margin-top: 0.4rem; }
-.work-item p { grid-column: 1 / -1; max-width: 60ch; color: var(--ink-soft); }
-.work-item .when { align-self: start; padding-top: 0.6rem; }
-.work-item .arrow-link { grid-column: 1 / -1; justify-self: start; }
-
 .arrow-link {
   display: inline-flex;
   align-items: center;
@@ -916,8 +899,6 @@ button, input, textarea { font: inherit; color: inherit; }
   .index-list a { grid-template-columns: 2.5rem minmax(0, 1fr) 2rem; }
   .index-list p { display: none; }
   .address-cards { grid-template-columns: 1fr; }
-  .work-item { grid-template-columns: 1fr; }
-  .work-item .when { padding-top: 0; }
 }
 
 /* ==========================================================================

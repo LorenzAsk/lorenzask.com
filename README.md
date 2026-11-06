@@ -17,7 +17,7 @@ Stop it with `Ctrl + C`.
 | File | What it is |
 |---|---|
 | `index.html` | The homepage: hero, Now, The long run, Off the clock, Moments. |
-| `about/`, `work/`, `contact/`, `privacy/` | The other pages, one folder each. |
+| `about/`, `contact/`, `privacy/` | The other pages, one folder each. |
 | `src/style.css` | Colours, fonts, spacing. The colours are at the top. |
 | `src/landscape.js` | The 3D landscape. The `SETTINGS` block at the top is safe to play with. |
 | `src/motion.js` | Smooth scrolling, reveals, the header. |
@@ -26,7 +26,7 @@ Stop it with `Ctrl + C`.
 | `src/forms.js` | The contact form and copy buttons. |
 | `public/` | Files copied as they are: the tab icon and photos. |
 | `public/icons/` | The Kvantra mark used in the footer. |
-| `vercel.json` | Forwards the old /kvantra/ address to /work/. |
+| `vercel.json` | Sends anyone with the old /kvantra/ link straight to kvantra.ai. |
 
 ## Updating the Now section
 

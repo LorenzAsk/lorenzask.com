@@ -74,7 +74,7 @@ function splitHeadlines() {
 function initReveals() {
   const auto = [
     '.block-head:not(.ultra-head)', '.now-list > li', '.care', '.photo', '.index-list > a',
-    '.story > *', '.about-photo', '.work-group > *', '.write-form > *',
+    '.story > *', '.about-photo', '.write-form > *',
     '.address-cards > li', '.prose > *', '.footer-cta .stack > *',
   ];
   document.querySelectorAll(auto.join(',')).forEach((el) => el.setAttribute('data-reveal', ''));

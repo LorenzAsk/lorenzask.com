@@ -10,7 +10,6 @@ export default defineConfig({
       input: {
         main: resolve(root, 'index.html'),
         about: resolve(root, 'about/index.html'),
-        work: resolve(root, 'work/index.html'),
         contact: resolve(root, 'contact/index.html'),
         privacy: resolve(root, 'privacy/index.html'),
       },
