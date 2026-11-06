@@ -19,7 +19,6 @@ export function initMotion() {
   initHeader();
   initMagnetic();
   initGlow();
-  initToTop();
 
   onScroll(); // set the starting state before anything moves
 }
@@ -163,12 +162,3 @@ function initGlow() {
   })();
 }
 
-function initToTop() {
-  document.querySelectorAll('[data-to-top]').forEach((el) => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (lenis) lenis.scrollTo(0, { duration: 1.6 });
-      else window.scrollTo({ top: 0 });
-    });
-  });
-}
