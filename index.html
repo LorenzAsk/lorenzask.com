@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+
+  <title>Lorenz Ask</title>
+  <!-- ✏️ YOUR TEXT: the line Google shows under your name in search results. -->
+  <meta name="description" content="Lorenz Ask, founder of Kvantra.">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="site-name" href="/">Lorenz Ask</a>
+    <nav class="site-nav">
+      <a href="#about">About</a>
+      <a href="#kvantra">Kvantra</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <!-- The 3D data landscape is drawn into this canvas by src/landscape.js -->
+      <canvas class="landscape" aria-hidden="true"></canvas>
+
+      <div class="hero-content">
+        <p class="label">Founder, Kvantra</p>
+        <!-- ✏️ YOUR TEXT: one sentence about what you do or care about. -->
+        <h1>[Your one sentence goes here.]</h1>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <p class="label">About</p>
+      <div class="section-body">
+        <!-- ✏️ YOUR TEXT: a few lines about you. Each <p> is one paragraph. -->
+        <p>[A few lines about you: your background, and how you ended up founding Kvantra.]</p>
+      </div>
+    </section>
+
+    <section id="kvantra" class="section">
+      <p class="label">Kvantra</p>
+      <div class="section-body">
+        <!-- ✏️ YOUR TEXT: Kvantra in one sentence, and the real web address. -->
+        <p>[Kvantra in one sentence.]</p>
+        <a class="arrow-link" href="#">[kvantra website]</a>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <p class="label">Contact</p>
+      <div class="section-body">
+        <!-- ✏️ YOUR TEXT: the email address you want people to use. -->
+        <a class="email" href="mailto:you@example.com">[your email]</a>
+        <ul class="links">
+          <li><a href="https://github.com/LorenzAsk">GitHub</a></li>
+          <!-- ✏️ YOUR LINKS: replace # with your profile addresses. -->
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">X</a></li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>© <span data-year>2026</span> Lorenz Ask</span>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
