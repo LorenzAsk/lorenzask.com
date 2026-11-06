@@ -648,39 +648,6 @@ button, input, textarea { font: inherit; color: inherit; }
   opacity: 0.6;
 }
 
-/* ---- Index: big rows that fill with sky on hover ---- */
-
-.index-list { border-top: 2px solid var(--ink); }
-.block-head + .index-list { border-top: 0; }
-.index-list a {
-  position: relative;
-  display: grid;
-  grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 22rem) 3rem;
-  align-items: center;
-  gap: 1.5rem;
-  padding: clamp(1.1rem, 2.6vh, 1.8rem) 0.5rem;
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
-  isolation: isolate;
-  transition: color 0.6s var(--ease-out), padding 0.6s var(--ease-out);
-}
-.index-list a::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--sky);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform 0.6s var(--ease-out);
-}
-.index-list a:hover { color: #fff; padding-left: 1.5rem; padding-right: 1.5rem; }
-.index-list a:hover::before { transform: scaleY(1); }
-.index-list a:hover .label, .index-list a:hover p { color: var(--ink); }
-.index-list strong { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 7.5vw, 7rem); line-height: 0.92; text-transform: uppercase; }
-.index-list p { color: var(--ink-soft); transition: color 0.6s var(--ease-out); }
-.index-list .go { justify-self: end; font-size: 1.8rem; transition: transform 0.6s var(--ease-out); }
-.index-list a:hover .go { transform: rotate(-45deg); }
 
 /* ==========================================================================
    FOOTER — the sky again, with a giant wordmark
@@ -917,8 +884,6 @@ button, input, textarea { font: inherit; color: inherit; }
   .care .stat { margin-top: 2rem; }
   .photos { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
   .photo:first-child { grid-column: span 2; grid-row: span 1; }
-  .index-list a { grid-template-columns: 2.5rem minmax(0, 1fr) 2rem; }
-  .index-list p { display: none; }
   .address-cards { grid-template-columns: 1fr; }
 }
 
