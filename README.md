@@ -24,9 +24,11 @@ Stop it with `Ctrl + C`.
 | `src/ultra.js` | The long run: your chapters drawn as a race you scroll through. The chapters themselves are the list in `index.html`. |
 | `src/cube.js` | The Rubik's cube on the homepage. |
 | `src/forms.js` | The contact form and copy buttons. |
+| `src/roadmap.js` | Draws the Kvantra roadmap line when it comes into view. |
+| `kvantra/index.html` | The Kvantra page: ambition, roadmap and the open role. |
 | `public/` | Files copied as they are: the tab icon and photos. |
 | `public/icons/` | The Kvantra mark used in the footer. |
-| `vercel.json` | Sends anyone with the old /kvantra/ link straight to kvantra.ai. |
+| `vercel.json` | Vercel settings (empty for now). |
 
 ## Updating the Now section
 

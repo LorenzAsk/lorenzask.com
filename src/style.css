@@ -11,11 +11,11 @@
   --sky-light:  #6cc0ff;
   --sky-mist:   #e8f4ff;
   --cloud:      #FDFDFE;   /* the page */
-  --ink:        #0b1b2e;   /* text */
-  --ink-soft:   #3f5068;
-  --faint:      #7b8aa0;
-  --line:       rgba(11, 27, 46, 0.12);
-  --line-sky:   rgba(11, 27, 46, 0.22);
+  --ink:        #000000;   /* text: pure black */
+  --ink-soft:   #3d3d3d;
+  --faint:      #7a7a7a;
+  --line:       rgba(0, 0, 0, 0.12);
+  --line-sky:   rgba(0, 0, 0, 0.22);
 
   --display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
   --sans:    'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -492,13 +492,13 @@ button, input, textarea { font: inherit; color: inherit; }
   border-radius: 50%;
   background: var(--ink);
   border: 4px solid #fff;
-  box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.55), 0 6px 18px rgba(11, 27, 46, 0.3);
+  box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.55), 0 6px 18px rgba(0, 0, 0, 0.3);
   animation: stride 1.4s var(--ease-out) infinite;
 }
 @keyframes stride {
-  0%   { box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.55), 0 6px 18px rgba(11, 27, 46, 0.3); }
-  80%  { box-shadow: 0 0 0 16px rgba(0, 153, 255, 0), 0 6px 18px rgba(11, 27, 46, 0.3); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 153, 255, 0), 0 6px 18px rgba(11, 27, 46, 0.3); }
+  0%   { box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.55), 0 6px 18px rgba(0, 0, 0, 0.3); }
+  80%  { box-shadow: 0 0 0 16px rgba(0, 153, 255, 0), 0 6px 18px rgba(0, 0, 0, 0.3); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 153, 255, 0), 0 6px 18px rgba(0, 0, 0, 0.3); }
 }
 .ultra-runner .you {
   position: absolute;
@@ -553,6 +553,27 @@ button, input, textarea { font: inherit; color: inherit; }
 .ultra.is-static .ultra-list h3 { font-size: 1.2rem; font-weight: 600; }
 .ultra.is-static .ultra-list p { color: var(--ink-soft); }
 
+/* The long run is the one big blue chapter in the middle of the home page:
+   white course on sky, the panel in navy. */
+.ultra { background: var(--sky); color: #fff; }
+.ultra ::selection { background: var(--ink); }
+.ultra .block-head { border-bottom-color: #fff; }
+.ultra .label { color: rgba(255, 255, 255, 0.78); }
+.ultra .ultra-when { color: var(--ink); }
+.ultra .ultra-big { color: #fff; }
+.ultra .ultra-text { color: rgba(255, 255, 255, 0.85); }
+.ultra .ultra-hud .label { color: var(--sky-light); }
+.ultra .ultra-grid { stroke: rgba(255, 255, 255, 0.25); }
+.ultra .ultra-ghost { stroke: rgba(255, 255, 255, 0.4); }
+.ultra .ultra-future { stroke: #fff; }
+.ultra .ultra-line { stroke: #fff; }
+.ultra .ultra-marker .dot { background: var(--sky); border-color: rgba(255, 255, 255, 0.55); }
+.ultra .ultra-marker .tag { color: rgba(255, 255, 255, 0.7); }
+.ultra .ultra-marker.is-passed .dot { background: #fff; border-color: #fff; }
+.ultra .ultra-marker.is-passed .tag { color: #fff; }
+.ultra .ultra-marker.is-current .dot { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3); }
+.ultra.is-static .ultra-list p { color: rgba(255, 255, 255, 0.85); }
+
 /* ---- Things I care about ---- */
 
 .cares {
@@ -576,10 +597,28 @@ button, input, textarea { font: inherit; color: inherit; }
 .care .stat { margin-top: auto; font-family: var(--display); font-size: clamp(2.8rem, 4.5vw, 4.2rem); line-height: 0.9; text-transform: uppercase; }
 .care h3 { margin-top: 0.8rem; font-size: 1.3rem; font-weight: 600; letter-spacing: -0.03em; }
 .care p { margin-top: 0.3rem; font-size: 0.95rem; line-height: 1.5; opacity: 0.8; }
+/* Every other card starts blue, and the hover swaps them round. */
+.care:nth-child(odd) { background: var(--sky); color: #fff; }
+.care:nth-child(odd) .label { color: var(--ink); }
+.care:nth-child(odd):hover { background: var(--cloud); color: var(--ink); }
+.care:nth-child(odd):hover .label { color: var(--faint); }
 /* Same space under every big word, so they line up across the cards. */
 .care p { min-height: 4.5em; }
+/* A card without a line of text keeps the same space, so it still lines up. */
+.care h3:last-child { padding-bottom: calc(0.3rem + 4.5 * 0.95rem); }
 
 /* The Rubik's cube card: a real 3D cube made of 54 stickers. */
+/* The Travel card's world map (src/travel.js). Visited countries are solid;
+   the rest is a faint silhouette. Colours swap with the card on hover. */
+.care-map { margin-top: 1.2rem; aspect-ratio: 2 / 1; }
+.care-map svg { display: block; width: 100%; height: 100%; }
+.care-map .land { fill: rgba(0, 0, 0, 0.12); stroke: var(--cloud); stroke-width: 0.4; transition: fill 0.5s; }
+.care-map .land.is-visited { fill: var(--sky); }
+.care:nth-child(odd) .care-map .land { fill: rgba(255, 255, 255, 0.2); stroke: var(--sky); }
+.care:nth-child(odd) .care-map .land.is-visited { fill: #fff; }
+.care:nth-child(odd):hover .care-map .land { fill: rgba(0, 0, 0, 0.12); stroke: var(--cloud); }
+.care:nth-child(odd):hover .care-map .land.is-visited { fill: var(--sky); }
+
 .care-cube { cursor: pointer; }
 .cube-stage {
   height: 150px;
@@ -609,7 +648,7 @@ button, input, textarea { font: inherit; color: inherit; }
   transition: background 0.45s var(--ease-out);
 }
 .cube-hint { margin-top: 0.6rem; }
-.care-cube:hover .cube-face { background: #04101e; }
+.care-cube:hover .cube-face { background: #000; }
 
 /* ---- Photos ---- */
 
@@ -649,6 +688,41 @@ button, input, textarea { font: inherit; color: inherit; }
   opacity: 0.6;
 }
 
+
+/* ---- Light blue sections and statement bands ----
+   Light blue: a full-width pale background behind an ordinary section.
+   Band: a full-width blue strip with one giant line that drifts sideways
+   as you scroll (src/motion.js, initBands). */
+
+.block.is-mist {
+  padding-bottom: clamp(5rem, 14vh, 9rem);
+  background: var(--sky-mist);
+  box-shadow: 0 0 0 100vmax var(--sky-mist);
+  clip-path: inset(0 -100vmax);
+}
+
+.band {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(5rem, 14vh, 9rem);
+  padding: clamp(2.5rem, 7vh, 4.5rem) 0 clamp(2rem, 6vh, 3.8rem);
+  overflow: hidden;
+  background: var(--sky);
+  color: #fff;
+}
+.band + .block { margin-top: 0; }
+.band-track {
+  display: flex;
+  gap: 0.35em;
+  width: max-content;
+  font-family: var(--display);
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+  will-change: transform;
+}
+.band-track span:nth-child(even) { color: var(--ink); }
 
 /* ==========================================================================
    FOOTER — the sky again, with a giant wordmark
@@ -873,6 +947,175 @@ button, input, textarea { font: inherit; color: inherit; }
 @keyframes fade-in { from { opacity: 0; } }
 
 /* ==========================================================================
+   KVANTRA PAGE
+   ========================================================================== */
+
+.page-hero-actions { justify-content: center; margin-top: 2rem; }
+
+/* ---- Ambition ---- */
+
+.ambition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.ambition-lead {
+  font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+.ambition-text p { font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; color: var(--ink-soft); }
+.ambition-text p + p { margin-top: 1.2em; }
+
+/* ---- Roadmap ----
+   One row, like the pitch deck: filled dots for what's done, a hollow one
+   for what's next. The blue line draws itself left to right when the
+   section comes into view (src/roadmap.js adds .is-drawn). */
+
+.rm-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: clamp(2.5rem, 7vh, 4.5rem);
+}
+.rm-headline {
+  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+.rm-headline em { font-style: normal; color: var(--sky); }
+
+/* The strip: one row at every size. When the window is too narrow for all
+   seven, it scrolls sideways (swipe, trackpad or the arrows) and snaps to
+   each milestone. src/roadmap.js starts it at "Now". */
+.rm-scroll {
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 1rem var(--gutter) 1.5rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 var(--gutter);
+  scrollbar-width: none;
+}
+.rm-scroll::-webkit-scrollbar { display: none; }
+.rm-scroll:focus-visible { outline-offset: -2px; }
+/* A soft fade on whichever side has more to see. */
+.rm-scroll.can-right { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+.rm-scroll.can-left { -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%); mask-image: linear-gradient(90deg, transparent, #000 15%); }
+.rm-scroll.can-left.can-right { -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
+
+.roadmap {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(9.5rem, 1fr));
+  column-gap: 1.5rem;
+}
+.roadmap > li { scroll-snap-align: start; }
+.roadmap > li { position: relative; padding-top: 2.8rem; }
+
+/* The line: a faint rail, with the blue line on top of it. Each segment runs
+   from its own dot to the next one. */
+.roadmap > li::before, .roadmap > li::after {
+  content: '';
+  position: absolute;
+  top: 7px; left: 0; right: -1.5rem;
+  height: 2px;
+}
+.roadmap > li::before { background: var(--line); }
+.roadmap > li:last-child::before { right: 0; background: linear-gradient(90deg, var(--line), transparent); }
+.roadmap > li::after {
+  background: var(--sky);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s linear calc(var(--i) * 0.45s);
+}
+.roadmap.is-drawn > li.is-done::after { transform: scaleX(1); }
+.roadmap.is-drawn > li.is-edge::after { transform: scaleX(0.5); }
+
+.rm-dot {
+  position: absolute;
+  top: 0; left: 0;
+  z-index: 1;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--sky);
+  background: var(--cloud);
+  transition: background 0.3s calc(var(--i) * 0.45s);
+}
+.roadmap.is-drawn .is-done .rm-dot { background: var(--sky); }
+.roadmap.is-drawn .is-next .rm-dot { animation: rm-pulse 2s var(--ease-out) 3s infinite; }
+@keyframes rm-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.5); }
+  100% { box-shadow: 0 0 0 14px rgba(0, 153, 255, 0); }
+}
+
+.rm-when {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sky);
+}
+.roadmap h3 { margin-top: 0.4rem; font-size: clamp(1.2rem, 1.6vw, 1.45rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; }
+.roadmap p { margin-top: 0.4rem; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
+
+.rm-nav { display: none; gap: 0.5rem; flex-shrink: 0; }
+.rm-nav.is-on { display: flex; }
+.rm-arrow {
+  width: 2.8rem; height: 2.8rem;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, opacity 0.3s;
+}
+.rm-arrow:hover:not(:disabled) { background: var(--ink); color: #fff; }
+.rm-arrow:disabled { opacity: 0.25; cursor: default; }
+
+.rm-note {
+  margin-top: clamp(2.5rem, 7vh, 4.5rem);
+  max-width: 62ch;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: var(--ink-soft);
+}
+
+
+/* ---- Hiring ---- */
+
+.hiring {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  border-radius: 28px;
+  background: var(--sky);
+  color: #fff;
+}
+.hiring-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.hiring-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: rm-blink 1.6s ease-in-out infinite; }
+@keyframes rm-blink { 50% { opacity: 0.25; } }
+.hiring-title { margin-top: 1.2rem; font-size: clamp(2.6rem, 6vw, 5rem); }
+.hiring-btn { flex-shrink: 0; }
+
+/* ==========================================================================
    SMALLER SCREENS
    ========================================================================== */
 
@@ -905,6 +1148,8 @@ button, input, textarea { font: inherit; color: inherit; }
   .photos { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
   .photo:first-child { grid-column: span 2; grid-row: span 1; }
   .address-cards { grid-template-columns: 1fr; }
+
+  .ambition { grid-template-columns: 1fr; }
 }
 
 /* ==========================================================================

@@ -19,6 +19,7 @@ export function initMotion() {
   initHeader();
   initMagnetic();
   initGlow();
+  initBands();
 
   onScroll(); // set the starting state before anything moves
 }
@@ -162,3 +163,20 @@ function initGlow() {
   })();
 }
 
+
+/* ---- Statement bands: the giant line drifts left as you scroll past ---- */
+function initBands() {
+  if (reducedMotion) return;
+  const tracks = [...document.querySelectorAll('[data-band]')];
+  if (!tracks.length) return;
+  scrollListeners.push(() => {
+    const vh = window.innerHeight;
+    for (const track of tracks) {
+      const box = track.parentElement.getBoundingClientRect();
+      if (box.bottom < 0 || box.top > vh) continue;
+      // 0 when the band enters at the bottom, 1 when it leaves at the top.
+      const progress = (vh - box.top) / (vh + box.height);
+      track.style.transform = `translateX(${(-8 - progress * 22).toFixed(2)}%)`;
+    }
+  });
+}

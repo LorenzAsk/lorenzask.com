@@ -8,6 +8,8 @@ import { initMotion } from './motion.js';
 import { initCube } from './cube.js';
 import { initUltra } from './ultra.js';
 import { initForms } from './forms.js';
+import { initRoadmap } from './roadmap.js';
+import { initTravel } from './travel.js';
 
 const canvas = document.querySelector('.landscape');
 if (canvas) createLandscape(canvas);
@@ -15,6 +17,8 @@ if (canvas) createLandscape(canvas);
 initForms();
 initCube();
 initUltra();
+initRoadmap();
+initTravel();
 initMotion();
 
 document.querySelectorAll('[data-year]').forEach((el) => {

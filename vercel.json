@@ -1,6 +1,1 @@
-{
-  "redirects": [
-    { "source": "/kvantra", "destination": "https://kvantra.ai", "permanent": true },
-    { "source": "/kvantra/", "destination": "https://kvantra.ai", "permanent": true }
-  ]
-}
+{}

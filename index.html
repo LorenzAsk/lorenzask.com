@@ -31,6 +31,7 @@
     <a class="site-name" href="/">Lorenz Ask</a>
     <nav class="site-nav" aria-label="Primary">
       <a href="/about/">About</a>
+      <a href="/kvantra/">Kvantra</a>
       <a href="/contact/">Contact</a>
     </nav>
     <span class="demo-chip header-cta">Demo site</span>
@@ -105,8 +106,8 @@
           <svg viewBox="0 0 1000 400" preserveAspectRatio="none">
             <defs>
               <linearGradient id="ultra-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#0099FF" stop-opacity="0.28" />
-                <stop offset="100%" stop-color="#0099FF" stop-opacity="0" />
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
               </linearGradient>
               <clipPath id="ultra-clip"><rect x="0" y="0" width="0" height="400" /></clipPath>
             </defs>
@@ -179,9 +180,9 @@
         </li>
         <li class="care">
           <span class="label">Travel</span>
-          <span class="stat">Away</span>
-          <h3>Travel</h3>
-          <p>New places, whenever I can.</p>
+          <div class="care-map" data-travel-map></div>
+          <span class="stat">33</span>
+          <h3>Countries</h3>
         </li>
         <li class="care care-cube" tabindex="0" role="button" aria-label="Rubik's cube: press to scramble or solve it">
           <span class="label">Rubik's cube</span>
@@ -194,7 +195,12 @@
     </section>
 
     <!-- ============ PHOTOS ============ -->
-    <section class="block" aria-labelledby="photos-title">
+    <!-- Statement band: drifts sideways as you scroll -->
+    <div class="band" aria-hidden="true">
+      <div class="band-track" data-band><span>Full speed ahead.</span><span>Full speed ahead.</span><span>Full speed ahead.</span><span>Full speed ahead.</span></div>
+    </div>
+
+    <section class="block is-mist" aria-labelledby="photos-title">
       <div class="block-head">
         <h2 class="display block-title" id="photos-title">Moments</h2>
         <span class="label">More coming</span>
@@ -236,6 +242,7 @@
         <nav class="footer-col" aria-label="Site">
           <p class="footer-label">Site</p>
           <a href="/about/">About</a>
+          <a href="/kvantra/">Kvantra</a>
           <a href="/contact/">Contact</a>
         </nav>
         <nav class="footer-col" aria-label="Legal">
