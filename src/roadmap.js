@@ -1,7 +1,7 @@
 // The Kvantra roadmap.
 // 1. When it scrolls into view, the blue line draws itself from the first
 //    milestone to today and the dots fill in one by one.
-// 2. When the window is too narrow for all seven milestones, the strip scrolls
+// 2. When the window is too narrow for all the milestones, the strip scrolls
 //    sideways: it starts at "Now", the arrows step one milestone at a time,
 //    and the edges fade on whichever side has more to see.
 
