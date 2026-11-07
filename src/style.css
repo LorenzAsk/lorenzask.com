@@ -1079,17 +1079,6 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ---- Hiring ---- */
 
-.hiring {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.5rem 2rem;
-  padding: clamp(2rem, 5vw, 4rem);
-  border-radius: 28px;
-  background: var(--sky);
-  color: #fff;
-}
 .hiring-tag {
   display: inline-flex;
   align-items: center;
@@ -1105,8 +1094,8 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .hiring-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: rm-blink 1.6s ease-in-out infinite; }
 @keyframes rm-blink { 50% { opacity: 0.25; } }
-.hiring-title { margin-top: 1.2rem; font-size: clamp(2.6rem, 6vw, 5rem); }
-.hiring-btn { flex-shrink: 0; }
+/* On white (the Let's talk block on the Kvantra page): a solid blue bubble. */
+.hiring-tag.on-light { margin-bottom: 1rem; background: var(--sky); color: #fff; }
 
 /* ==========================================================================
    SMALLER SCREENS
