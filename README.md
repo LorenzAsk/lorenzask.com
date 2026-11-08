@@ -16,7 +16,7 @@ Stop it with `Ctrl + C`.
 
 | File | What it is |
 |---|---|
-| `index.html` | The homepage: hero, Now, The long run, Off the clock, Moments. |
+| `index.html` | The homepage: hero, The long run, Off the clock, Moments. |
 | `about/`, `contact/`, `privacy/` | The other pages, one folder each. |
 | `src/style.css` | Colours, fonts, spacing. The colours are at the top. |
 | `src/landscape.js` | The 3D landscape. The `SETTINGS` block at the top is safe to play with. |
@@ -29,11 +29,6 @@ Stop it with `Ctrl + C`.
 | `public/` | Files copied as they are: the tab icon and photos. |
 | `public/icons/` | The Kvantra mark used in the footer. |
 | `vercel.json` | Vercel settings (empty for now). |
-
-## Updating the Now section
-
-Edit the list under `NOW` in `index.html`, and change "Updated November 2026"
-to the current month.
 
 ## Adding a photo
 

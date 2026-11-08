@@ -371,21 +371,6 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .block-title { font-size: clamp(3rem, 8vw, 7.5rem); }
 
-/* ---- Now ---- */
-
-.now-list li {
-  display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 1.5rem;
-  padding: 1.6rem 0;
-  border-bottom: 1px solid var(--line);
-}
-.now-list .num { font-family: var(--mono); font-size: 0.8rem; color: var(--sky); }
-.now-list h3 { font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 600; letter-spacing: -0.035em; line-height: 1.15; }
-.now-list p { margin-top: 0.3rem; color: var(--ink-soft); max-width: 60ch; }
-.now-list .go { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 2px solid var(--sky); }
-
 /* ---- The long run: life drawn as a race (src/ultra.js) ----
    The section is tall; its inner part sticks to the screen while you scroll
    through that height, and the script turns the scroll into the runner's
@@ -1115,8 +1100,6 @@ button, input, textarea { font: inherit; color: inherit; }
   .site-nav { gap: 1.1rem; }
   .site-nav a { font-size: 0.7rem; }
   .block-head { flex-direction: column; align-items: flex-start; }
-  .now-list li { grid-template-columns: 2.5rem minmax(0, 1fr); }
-  .now-list .go { grid-column: 2; justify-self: start; }
 
   /* The long run on phones: a bit less scrolling, the panel above the chart. */
   .ultra { height: 340svh; }

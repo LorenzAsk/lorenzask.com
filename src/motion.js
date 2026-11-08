@@ -73,7 +73,7 @@ function splitHeadlines() {
    attribute on every element. Things in the first screen show straight away. */
 function initReveals() {
   const auto = [
-    '.block-head:not(.ultra-head)', '.now-list > li', '.care', '.photo',
+    '.block-head:not(.ultra-head)', '.care', '.photo',
     '.story > *', '.about-photo', '.write-form > *',
     '.address-cards > li', '.prose > *', '.footer-cta .stack > *',
   ];
