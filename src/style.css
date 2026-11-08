@@ -337,17 +337,7 @@ button, input, textarea { font: inherit; color: inherit; }
   text-shadow: 0 2px 30px rgba(0, 80, 160, 0.12);
 }
 
-.hero-sub {
-  max-width: 34ch;
-  margin-top: clamp(1.25rem, 3vh, 2rem);
-  font-size: clamp(1.2rem, 1.7vw, 1.4rem);
-  font-weight: 600;
-  line-height: 1.4;
-  color: #fff;
-}
-
 .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 2rem; }
-
 
 /* ==========================================================================
    HOME — SECTIONS
@@ -672,7 +662,6 @@ button, input, textarea { font: inherit; color: inherit; }
   color: var(--ink);
   opacity: 0.6;
 }
-
 
 /* ---- Light blue sections and statement bands ----
    Light blue: a full-width pale background behind an ordinary section.
@@ -1060,7 +1049,6 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .rm-arrow:hover:not(:disabled) { background: var(--ink); color: #fff; }
 .rm-arrow:disabled { opacity: 0.25; cursor: default; }
-
 
 /* ---- Hiring ---- */
 
