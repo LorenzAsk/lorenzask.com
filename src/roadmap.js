@@ -1,63 +1,146 @@
-// The Kvantra roadmap.
-// 1. When it scrolls into view, the blue line draws itself from the first
-//    milestone to today and the dots fill in one by one.
-// 2. When the window is too narrow for all the milestones, the strip scrolls
-//    sideways: it starts at "Now", the arrows step one milestone at a time,
-//    and the edges fade on whichever side has more to see.
+// The Kvantra roadmap: a pinned scene on the page.
+// While you scroll through the section the screen holds still, the milestones
+// slide sideways along a rising curve, and a blue line draws itself over a
+// faint one, led by a dot. How far you've scrolled is all that drives it.
+//
+// If someone prefers reduced motion (or JavaScript is off) none of this runs,
+// and the CSS shows a plain row that swipes sideways.
+
+const CURVE = 2.6;   // Higher = flatter at the start and steeper at the end.
+const LIFT = 28;     // Space between the line and the text above it, in px.
 
 export function initRoadmap() {
-  const list = document.querySelector('[data-roadmap]');
-  if (!list) return;
-  initDraw(list);
-  initStrip(list);
-}
+  const scene = document.querySelector('[data-rm-scene]');
+  if (!scene) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-function initDraw(list) {
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion || !('IntersectionObserver' in window)) {
-    list.classList.add('is-drawn');
-    return;
-  }
-  const observer = new IntersectionObserver((entries) => {
-    if (!entries.some((e) => e.isIntersecting)) return;
-    list.classList.add('is-drawn');
-    observer.disconnect();
-  }, { threshold: 0.4 });
-  observer.observe(list);
-}
-
-function initStrip(list) {
-  const strip = document.querySelector('[data-rm-scroll]');
-  const nav = document.querySelector('[data-rm-nav]');
-  if (!strip || !nav) return;
-  const prev = nav.querySelector('[data-rm-prev]');
-  const next = nav.querySelector('[data-rm-next]');
+  scene.classList.add('is-live');
+  const pin = scene.querySelector('[data-rm-pin]');
+  const track = scene.querySelector('[data-rm-track]');
+  const headline = scene.querySelector('.rm-headline');
+  const list = scene.querySelector('[data-roadmap]');
   const items = [...list.children];
+  const svg = track.querySelector('svg');
+  const base = svg.querySelector('[data-rm-base]');
+  const trail = svg.querySelector('[data-rm-trail]');
+  const tip = track.querySelector('[data-rm-tip]');
+
+  let g = null; // The measurements from the last layout.
+
+  function layout() {
+    // The pin fills the window, wider than the section's own column.
+    const left = scene.getBoundingClientRect().left;
+    const width = document.documentElement.clientWidth;
+    pin.style.marginLeft = `${-left}px`;
+    pin.style.width = `${width}px`;
+    pin.style.paddingInline = `${left}px`;
+
+    const height = pin.clientHeight;
+    const gap = parseFloat(getComputedStyle(list).columnGap) || 0;
+
+    let x = left;
+    const boxes = items.map((item) => {
+      const box = { item, x, w: item.offsetWidth, h: item.offsetHeight };
+      x += box.w + gap;
+      return box;
+    });
+    const last = boxes[boxes.length - 1];
+    const xStart = left;
+    const xEnd = last.x + last.w;
+
+    const travel = Math.max(0, xEnd + left - width);
+    scene.classList.toggle('no-travel', travel === 0);
+
+    // The track sinks as it slides, so the climb stays on screen. The rise is
+    // whatever leaves the last milestone just clear of the headline.
+    const baseY = height * 0.8;
+    const sink = travel > 0 ? height * 0.16 : 0;
+    const headBottom = headline.offsetTop + headline.offsetHeight;
+    const room = baseY + sink - (headBottom + 24 + last.h + LIFT);
+    const rise = Math.max(height * 0.08, room);
+    const y = (px) => baseY - rise * Math.pow(Math.max(0, px / xEnd), CURVE);
+
+    // Each milestone sits above the line at its right edge, where the line is
+    // highest, so the line never runs through the text.
+    boxes.forEach((b) => {
+      b.item.style.transform = `translate(${b.x}px, ${y(b.x + b.w) - LIFT - b.h}px)`;
+    });
+
+    // Both lines share one path. Walking along it gives the length at each x,
+    // so the blue one can stop exactly under the dot.
+    const end = xEnd + left + 80;
+    const step = 6;
+    const lengths = [0];
+    let d = `M0 ${y(0).toFixed(1)}`;
+    for (let px = step; px <= end; px += step) {
+      d += `L${px} ${y(px).toFixed(1)}`;
+      lengths.push(lengths[lengths.length - 1] + Math.hypot(step, y(px) - y(px - step)));
+    }
+    const total = lengths[lengths.length - 1];
+    base.setAttribute('d', d);
+    trail.setAttribute('d', d);
+    trail.setAttribute('stroke-dasharray', total);
+
+    g = { xStart, xEnd, travel, sink, y, lengths, step, total };
+    update();
+  }
 
   function update() {
-    const max = strip.scrollWidth - strip.clientWidth;
-    const overflowing = max > 2;
-    const left = strip.scrollLeft > 2;
-    const right = strip.scrollLeft < max - 2;
-    nav.classList.toggle('is-on', overflowing);
-    strip.classList.toggle('can-left', overflowing && left);
-    strip.classList.toggle('can-right', overflowing && right);
-    prev.disabled = !left;
-    next.disabled = !right;
+    if (!g) return;
+    const range = scene.offsetHeight - pin.clientHeight;
+    const scrolled = -scene.getBoundingClientRect().top;
+    const p = range > 0 ? Math.min(1, Math.max(0, scrolled / range)) : 0;
+
+    track.style.transform = `translate3d(${-g.travel * p}px, ${g.sink * Math.pow(p, 0.6)}px, 0)`;
+
+    const x = g.xStart + (g.xEnd - g.xStart) * p;
+    const drawn = g.lengths[Math.min(g.lengths.length - 1, Math.round(x / g.step))];
+    trail.setAttribute('stroke-dashoffset', g.total - drawn);
+    tip.style.transform = `translate(${x}px, ${g.y(x)}px)`;
   }
 
-  // One milestone at a time: the width of a column plus the gap.
-  function step(direction) {
-    const width = items[1] ? items[1].offsetLeft - items[0].offsetLeft : strip.clientWidth;
-    strip.scrollBy({ left: direction * width, behavior: 'smooth' });
+  let queued = false;
+  window.addEventListener('scroll', () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; update(); });
+  }, { passive: true });
+  window.addEventListener('resize', layout, { passive: true });
+
+  initGlow(tip, scene);
+
+  layout();
+  // The big "Next up" changes size when the display font arrives.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+}
+
+// The leading light. Every so often it picks a new random brightness and eases
+// towards it, so the pulse has no rhythm. It rests while off screen.
+function initGlow(tip, scene) {
+  let glow = 0.5;
+  let target = 0.5;
+  let nextPick = 0;
+  let last = 0;
+  let running = false;
+
+  function frame(now) {
+    if (!running) return;
+    if (now >= nextPick) {
+      target = Math.random();
+      nextPick = now + 250 + Math.random() * 1100;
+    }
+    glow += (target - glow) * (1 - Math.exp(-(now - last) / 220));
+    last = now;
+    tip.style.setProperty('--glow', glow.toFixed(3));
+    requestAnimationFrame(frame);
   }
-  prev.addEventListener('click', () => step(-1));
-  next.addEventListener('click', () => step(1));
 
-  strip.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-
-  // Start at "Now", the newest milestone.
-  strip.scrollLeft = strip.scrollWidth;
-  update();
+  new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting === running) return;
+    running = entry.isIntersecting;
+    if (running) {
+      last = performance.now();
+      requestAnimationFrame(frame);
+    }
+  }).observe(scene);
 }

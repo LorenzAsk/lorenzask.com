@@ -68,54 +68,61 @@
       <div class="band-track" data-band><span>Same rules. Every stock.</span><span>Same rules. Every stock.</span><span>Same rules. Every stock.</span><span>Same rules. Every stock.</span></div>
     </div>
 
-    <!-- ROADMAP: the line draws itself when the section comes into view (src/roadmap.js) -->
-    <section class="block is-mist" aria-labelledby="roadmap-title">
+    <!-- ROADMAP: a pinned scene. Scrolling slides the milestones along a rising line (src/roadmap.js) -->
+    <section class="block is-mist rm-section" aria-labelledby="roadmap-title">
       <div class="block-head">
         <h2 class="display block-title" id="roadmap-title">Roadmap</h2>
         <span class="label">Updated November 2026</span>
       </div>
 
-      <div class="rm-top">
-        <p class="rm-headline" data-reveal>Three versions in <em>nine months.</em></p>
-        <div class="rm-nav" data-rm-nav>
-          <button type="button" class="rm-arrow" data-rm-prev aria-label="Earlier milestones">←</button>
-          <button type="button" class="rm-arrow" data-rm-next aria-label="Later milestones">→</button>
+      <div class="rm-scene" data-rm-scene>
+        <div class="rm-pin" data-rm-pin>
+          <p class="rm-headline">Three versions in <em>nine months.</em></p>
+          <div class="rm-track" data-rm-track>
+            <svg aria-hidden="true" focusable="false">
+              <path data-rm-base fill="none"></path>
+              <path data-rm-trail fill="none"></path>
+            </svg>
+            <span class="rm-tip" data-rm-tip aria-hidden="true"></span>
+            <ol class="roadmap" data-roadmap>
+              <li>
+                <span class="rm-when">11 Aug 2025</span>
+                <h3>Registered</h3>
+                <p>Started as Axiom Analytics.</p>
+              </li>
+              <li>
+                <span class="rm-when">17 Jan 2026</span>
+                <h3>MVP live</h3>
+                <p>First version, open to users in Europe.</p>
+              </li>
+              <li>
+                <span class="rm-when">5 Mar 2026</span>
+                <h3>Renamed</h3>
+                <p>Axiom Analytics became Kvantra.</p>
+              </li>
+              <li>
+                <span class="rm-when">1 Jul 2026</span>
+                <h3>V2, global</h3>
+                <p>Opened to users in 175+ countries, with KvantraRank and paid tiers.</p>
+              </li>
+              <li>
+                <span class="rm-when">Aug 2026</span>
+                <h3>Full-time</h3>
+                <p>Both founders on Kvantra full-time.</p>
+              </li>
+              <li>
+                <span class="rm-when">19 Oct 2026</span>
+                <h3>V3 live</h3>
+                <p>New features focused on historical depth, and a reworked email system.</p>
+              </li>
+              <li class="is-next">
+                <span class="rm-when">Now</span>
+                <h3>Next up</h3>
+                <p>The AI macro analyst, pre-seed funding and mobile apps.</p>
+              </li>
+            </ol>
+          </div>
         </div>
-      </div>
-
-      <div class="rm-scroll" data-rm-scroll tabindex="0" aria-label="Roadmap timeline, scrolls sideways">
-      <ol class="roadmap" data-roadmap>
-        <li class="is-done" style="--i: 0">
-          <span class="rm-dot" aria-hidden="true"></span>
-          <span class="rm-when">17 Jan 2026</span>
-          <h3>MVP live</h3>
-          <p>First version, open to users in Europe.</p>
-        </li>
-        <li class="is-done" style="--i: 1">
-          <span class="rm-dot" aria-hidden="true"></span>
-          <span class="rm-when">1 Jul 2026</span>
-          <h3>V2, global</h3>
-          <p>Opened to users in 175 countries.</p>
-        </li>
-        <li class="is-done" style="--i: 2">
-          <span class="rm-dot" aria-hidden="true"></span>
-          <span class="rm-when">Aug 2026</span>
-          <h3>Full-time</h3>
-          <p>Both founders on Kvantra full-time.</p>
-        </li>
-        <li class="is-done is-edge" style="--i: 3">
-          <span class="rm-dot" aria-hidden="true"></span>
-          <span class="rm-when">19 Oct 2026</span>
-          <h3>V3 live</h3>
-          <p>A new platform and a full redesign.</p>
-        </li>
-        <li class="is-next" style="--i: 4">
-          <span class="rm-dot" aria-hidden="true"></span>
-          <span class="rm-when">Now</span>
-          <h3>Next up</h3>
-          <p>The AI macro analyst, pre-seed funding and mobile apps.</p>
-        </li>
-      </ol>
       </div>
 
     </section>

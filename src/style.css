@@ -943,17 +943,10 @@ button, input, textarea { font: inherit; color: inherit; }
 .ambition-text p + p { margin-top: 1.2em; }
 
 /* ---- Roadmap ----
-   One row, like the pitch deck: filled dots for what's done, a hollow one
-   for what's next. The blue line draws itself left to right when the
-   section comes into view (src/roadmap.js adds .is-drawn). */
+   Without JavaScript, or with reduced motion: a plain row that swipes sideways.
+   With .is-live (src/roadmap.js): a pinned scene, about three screens of
+   scrolling, where the milestones slide along a rising line. */
 
-.rm-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 1.5rem;
-  margin-bottom: clamp(2.5rem, 7vh, 4.5rem);
-}
 .rm-headline {
   font-size: clamp(2rem, 4.2vw, 3.6rem);
   font-weight: 600;
@@ -962,68 +955,24 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .rm-headline em { font-style: normal; color: var(--sky); }
 
-/* The strip: one row at every size. When the window is too narrow for all
-   milestones, it scrolls sideways (swipe, trackpad or the arrows) and snaps to
-   each milestone. src/roadmap.js starts it at "Now". */
-.rm-scroll {
-  margin: 0 calc(var(--gutter) * -1);
-  padding: 1rem var(--gutter) 1.5rem;
+.rm-track {
+  margin: clamp(2.5rem, 7vh, 4.5rem) calc(var(--gutter) * -1) 0;
+  padding: 0 var(--gutter) 1.5rem;
   overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scroll-padding: 0 var(--gutter);
   scrollbar-width: none;
 }
-.rm-scroll::-webkit-scrollbar { display: none; }
-.rm-scroll:focus-visible { outline-offset: -2px; }
-/* A soft fade on whichever side has more to see. */
-.rm-scroll.can-right { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
-.rm-scroll.can-left { -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%); mask-image: linear-gradient(90deg, transparent, #000 15%); }
-.rm-scroll.can-left.can-right { -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
+.rm-track::-webkit-scrollbar { display: none; }
+.rm-track svg, .rm-tip { display: none; }
 
 .roadmap {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(9.5rem, 1fr));
-  column-gap: 1.5rem;
+  display: flex;
+  column-gap: clamp(2rem, 5vw, 5rem);
+  width: max-content;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--sky);
 }
-.roadmap > li { scroll-snap-align: start; }
-.roadmap > li { position: relative; padding-top: 2.8rem; }
-
-/* The line: a faint rail, with the blue line on top of it. Each segment runs
-   from its own dot to the next one. */
-.roadmap > li::before, .roadmap > li::after {
-  content: '';
-  position: absolute;
-  top: 7px; left: 0; right: -1.5rem;
-  height: 2px;
-}
-.roadmap > li::before { background: var(--line); }
-.roadmap > li:last-child::before { right: 0; background: linear-gradient(90deg, var(--line), transparent); }
-.roadmap > li::after {
-  background: var(--sky);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.45s linear calc(var(--i) * 0.45s);
-}
-.roadmap.is-drawn > li.is-done::after { transform: scaleX(1); }
-.roadmap.is-drawn > li.is-edge::after { transform: scaleX(0.5); }
-
-.rm-dot {
-  position: absolute;
-  top: 0; left: 0;
-  z-index: 1;
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  border: 2px solid var(--sky);
-  background: var(--cloud);
-  transition: background 0.3s calc(var(--i) * 0.45s);
-}
-.roadmap.is-drawn .is-done .rm-dot { background: var(--sky); }
-.roadmap.is-drawn .is-next .rm-dot { animation: rm-pulse 2s var(--ease-out) 3s infinite; }
-@keyframes rm-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.5); }
-  100% { box-shadow: 0 0 0 14px rgba(0, 153, 255, 0); }
-}
+.roadmap > li { width: clamp(13rem, 22vw, 19rem); }
+.roadmap > li.is-next { width: max-content; }
 
 .rm-when {
   font-family: var(--mono);
@@ -1033,22 +982,100 @@ button, input, textarea { font: inherit; color: inherit; }
   text-transform: uppercase;
   color: var(--sky);
 }
-.roadmap h3 { margin-top: 0.4rem; font-size: clamp(1.2rem, 1.6vw, 1.45rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; }
-.roadmap p { margin-top: 0.4rem; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
-
-.rm-nav { display: none; gap: 0.5rem; flex-shrink: 0; }
-.rm-nav.is-on { display: flex; }
-.rm-arrow {
-  width: 2.8rem; height: 2.8rem;
-  border-radius: 50%;
-  border: 2px solid var(--ink);
-  background: transparent;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s, opacity 0.3s;
+.roadmap h3 { margin-top: 0.4rem; font-size: clamp(1.5rem, 2.4vw, 2.2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; }
+.roadmap p { margin-top: 0.4rem; max-width: 30ch; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
+/* The end of the story: much bigger than the rest. */
+.roadmap .is-next h3 {
+  margin-top: 0.6rem;
+  font-family: var(--display);
+  font-size: clamp(3.4rem, 8vw, 7.5rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 0.95;
 }
-.rm-arrow:hover:not(:disabled) { background: var(--ink); color: #fff; }
-.rm-arrow:disabled { opacity: 0.25; cursor: default; }
+
+/* The pinned scene. The scene's height sets how long the pin lasts. */
+.rm-scene.is-live { height: 300vh; height: 300svh; margin-top: clamp(2rem, 6vh, 4rem); }
+.rm-scene.is-live.no-travel { height: 200vh; height: 200svh; }
+.is-live .rm-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  padding-top: clamp(5.5rem, 13vh, 7.5rem);
+  overflow: hidden;
+}
+.is-live .rm-track {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  margin: 0; padding: 0;
+  overflow: visible;
+  will-change: transform;
+}
+.is-live .rm-track svg {
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  width: 1px; height: 1px;
+  overflow: visible;
+}
+.is-live [data-rm-base] { stroke: var(--line-sky); stroke-width: 1.5; }
+.is-live [data-rm-trail] { stroke: var(--sky); stroke-width: 3; stroke-linecap: round; }
+.is-live .rm-tip {
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+}
+/* The leading light: a bright core and a soft aura. src/roadmap.js moves
+   --glow between 0 and 1 at random, so it never pulses in a steady rhythm. */
+.is-live .rm-tip::before,
+.is-live .rm-tip::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.is-live .rm-tip::before {
+  z-index: 1;
+  top: -7px; left: -7px;
+  width: 14px; height: 14px;
+  background: var(--sky);
+  box-shadow: 0 0 calc(6px + 10px * var(--glow, 0.5)) calc(1px + 2px * var(--glow, 0.5)) var(--sky);
+}
+.is-live .rm-tip::after {
+  top: -70px; left: -70px;
+  width: 140px; height: 140px;
+  background: radial-gradient(circle, rgba(0, 153, 255, 0.5), rgba(0, 153, 255, 0.16) 35%, rgba(0, 153, 255, 0) 70%);
+  opacity: calc(0.3 + 0.7 * var(--glow, 0.5));
+  transform: scale(calc(0.7 + 0.5 * var(--glow, 0.5)));
+}
+.is-live .roadmap { display: block; width: 0; padding: 0; border: 0; }
+.is-live .roadmap > li { position: absolute; top: 0; left: 0; }
+
+/* The roadmap's colours: a deeper blue with pure white accents and black text.
+   Change --rm-blue to change the whole section's background. */
+.block.rm-section {
+  --rm-blue: #0088E6;
+  background: var(--rm-blue);
+  box-shadow: 0 0 0 100vmax var(--rm-blue);
+}
+.rm-section .label,
+.rm-section .rm-when,
+.rm-section .rm-headline em { color: #fff; }
+.rm-section .roadmap p { color: #000; }
+.rm-section .roadmap { border-top-color: #fff; }
+.rm-section [data-rm-base] { stroke: rgba(255, 255, 255, 0.35); }
+.rm-section [data-rm-trail] { stroke: #fff; }
+.rm-section .rm-tip::before {
+  background: #fff;
+  box-shadow: 0 0 calc(6px + 10px * var(--glow, 0.5)) calc(1px + 2px * var(--glow, 0.5)) #fff;
+}
+.rm-section .rm-tip::after {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.16) 35%, rgba(255, 255, 255, 0) 70%);
+}
 
 /* ---- Hiring ---- */
 
