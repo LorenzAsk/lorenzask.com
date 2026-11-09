@@ -947,13 +947,7 @@ button, input, textarea { font: inherit; color: inherit; }
    With .is-live (src/roadmap.js): a pinned scene, about three screens of
    scrolling, where the milestones slide along a rising line. */
 
-.rm-headline {
-  font-size: clamp(2rem, 4.2vw, 3.6rem);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-}
-.rm-headline em { font-style: normal; color: var(--sky); }
+.rm-pin { padding-top: clamp(5rem, 14vh, 9rem); }
 
 .rm-track {
   margin: clamp(2.5rem, 7vh, 4.5rem) calc(var(--gutter) * -1) 0;
@@ -996,7 +990,7 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 
 /* The pinned scene. The scene's height sets how long the pin lasts. */
-.rm-scene.is-live { height: 300vh; height: 300svh; margin-top: clamp(2rem, 6vh, 4rem); }
+.rm-scene.is-live { height: 300vh; height: 300svh; }
 .rm-scene.is-live.no-travel { height: 200vh; height: 200svh; }
 .is-live .rm-pin {
   position: sticky;
@@ -1059,12 +1053,12 @@ button, input, textarea { font: inherit; color: inherit; }
    Change --rm-blue to change the whole section's background. */
 .block.rm-section {
   --rm-blue: #0088E6;
+  padding-top: 0; /* The pinned screen has its own space at the top. */
   background: var(--rm-blue);
   box-shadow: 0 0 0 100vmax var(--rm-blue);
 }
 .rm-section .label,
-.rm-section .rm-when,
-.rm-section .rm-headline em { color: #fff; }
+.rm-section .rm-when { color: #fff; }
 .rm-section .roadmap p { color: #000; }
 .rm-section .roadmap { border-top-color: #fff; }
 .rm-section [data-rm-base] { stroke: rgba(255, 255, 255, 0.35); }

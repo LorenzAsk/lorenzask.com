@@ -17,7 +17,7 @@ export function initRoadmap() {
   scene.classList.add('is-live');
   const pin = scene.querySelector('[data-rm-pin]');
   const track = scene.querySelector('[data-rm-track]');
-  const headline = scene.querySelector('.rm-headline');
+  const head = scene.querySelector('[data-rm-head]');
   const list = scene.querySelector('[data-roadmap]');
   const items = [...list.children];
   const svg = track.querySelector('svg');
@@ -52,10 +52,10 @@ export function initRoadmap() {
     scene.classList.toggle('no-travel', travel === 0);
 
     // The track sinks as it slides, so the climb stays on screen. The rise is
-    // whatever leaves the last milestone just clear of the headline.
+    // whatever leaves the last milestone just clear of the Roadmap title.
     const baseY = height * 0.8;
     const sink = travel > 0 ? height * 0.16 : 0;
-    const headBottom = headline.offsetTop + headline.offsetHeight;
+    const headBottom = head.offsetTop + head.offsetHeight;
     const room = baseY + sink - (headBottom + 24 + last.h + LIFT);
     const rise = Math.max(height * 0.08, room);
     const y = (px) => baseY - rise * Math.pow(Math.max(0, px / xEnd), CURVE);
