@@ -553,7 +553,7 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .cares {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 .care {
@@ -640,6 +640,7 @@ button, input, textarea { font: inherit; color: inherit; }
   background: var(--sky-gradient);
 }
 .photo:first-child { grid-row: span 2; }
+.photo.is-wide { grid-column: span 2; }
 .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
 .photo:hover img { transform: scale(1.04); }
 .photo figcaption {
@@ -1096,7 +1097,6 @@ button, input, textarea { font: inherit; color: inherit; }
    ========================================================================== */
 
 @media (max-width: 1000px) {
-  .cares { grid-template-columns: repeat(2, 1fr); }
   .header-cta { display: none; }
   .site-header { grid-template-columns: 1fr auto; }
   .site-nav { justify-self: end; }
