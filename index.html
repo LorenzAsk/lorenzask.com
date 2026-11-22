@@ -34,19 +34,30 @@
         <li><span class="label">Email</span><a href="mailto:lorenzask@kvantra.ai">lorenzask@kvantra.ai</a></li>
         <li><span class="label">LinkedIn</span><a href="https://www.linkedin.com/in/lorenz-ask-0382123b6/" target="_blank" rel="noopener noreferrer">Lorenz Ask</a></li>
         <li><span class="label">GitHub</span><a href="https://github.com/LorenzAsk" target="_blank" rel="noopener noreferrer">LorenzAsk</a></li>
-        <li><span class="label">Startup</span><a href="https://kvantra.ai" target="_blank" rel="noopener noreferrer">Kvantra</a></li>
+        <li>
+          <span class="label">Startup</span>
+          <span class="pair">
+            <a href="https://kvantra.ai" target="_blank" rel="noopener noreferrer">Kvantra</a>
+            <span class="dot" aria-hidden="true">·</span>
+            <a href="https://www.linkedin.com/company/kvantra/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </span>
+        </li>
       </ul>
     </section>
   </main>
 
   <!-- The Kvantra mark, drawn as thin lines on the right edge of the screen.
-       The four shapes come straight from the logo's source file. -->
-  <svg class="mark" viewBox="0 0 216 166" aria-hidden="true" focusable="false">
+       The four shapes come straight from the logo's source file. src/mark.js
+       turns the lines into dots that scatter under the mouse and rebuild. -->
+  <div class="mark" data-mark aria-hidden="true">
+  <svg viewBox="0 0 216 166" focusable="false">
     <path d="M35.18 97.37 L35.18 165.74 L0 165.74 L0 132.55Z"/>
     <path d="M48.70 165.74 L83.85 165.74 L83.85 48.67 L48.70 83.87Z"/>
     <path d="M212.94 165.74 L165.83 165.74 L133.13 129.31 L132.55 129.85 L132.55 165.74 L97.37 165.74 L97.37 35.13 L132.55 0 L132.55 97.37 L164.93 99.81 L159.84 104.90Z"/>
     <path d="M215.96 48.68 L116.97 148.40 L97.38 129.97 L93.19 126.01 L83.86 117.23 L83.46 116.87 L48.69 151.59 L34.59 165.69 L0 165.69 L0 154.03 L35.18 118.94 L48.69 105.47 L82.78 71.38 L83.86 72.42 L97.38 85.07 L106.61 93.76 L116.29 102.91 L132.55 86.69 L170.12 48.68Z"/>
   </svg>
+  </div>
 
+  <script type="module" src="/src/mark.js"></script>
 </body>
 </html>

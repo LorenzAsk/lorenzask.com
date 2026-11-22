@@ -1,7 +1,7 @@
 # lorenzask.com
 
 My personal site: one dark page with my name, four links and the
-Kvantra mark. Plain HTML and CSS, no JavaScript, run locally with
+Kvantra mark. Plain HTML and CSS, plus one small script for the mark, run locally with
 [Vite](https://vite.dev).
 
 ## Run it on your Mac
@@ -19,6 +19,7 @@ Stop it with `Ctrl + C`.
 |---|---|
 | `index.html` | The whole page: the name, the links and the Kvantra mark. |
 | `src/style.css` | Colours, fonts and layout. The colours and fonts are at the top. |
+| `src/mark.js` | Makes the Kvantra mark scatter into dots under the mouse and rebuild. The `SETTINGS` block at the top is safe to play with. |
 | `public/favicon.svg` | The icon in the browser tab. |
 | `public/fonts/` | The two fonts (Source Serif 4 and Inter) and their licences. Hosted here so the page loads nothing from other sites. |
 | `vercel.json` | Sends the old addresses (`/about/`, `/kvantra/`, `/contact/`, `/privacy/`) to the homepage. |
