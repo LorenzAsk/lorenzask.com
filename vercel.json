@@ -1,1 +1,8 @@
-{}
+{
+  "redirects": [
+    { "source": "/about/:path*", "destination": "/", "permanent": false },
+    { "source": "/kvantra/:path*", "destination": "/", "permanent": false },
+    { "source": "/contact/:path*", "destination": "/", "permanent": false },
+    { "source": "/privacy/:path*", "destination": "/", "permanent": false }
+  ]
+}
