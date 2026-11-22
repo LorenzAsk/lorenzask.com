@@ -11,8 +11,7 @@
   --text:   #ece9e1;   /* warm off-white */
   --muted:  #8b877d;   /* labels */
   --line:   #2a2823;   /* the thin rules between links */
-  --mark:   #453b29;   /* the Kvantra mark's lines */
-  --accent: #d97757;   /* link hover */
+  --mark:   #453b29;   /* the Kvantra mark's lines, and links on hover */
 
   --serif: 'Source Serif 4', 'Iowan Old Style', Georgia, serif;
   --sans:  'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -38,7 +37,7 @@ body {
   overflow-x: hidden;
 }
 
-::selection { background: var(--accent); color: var(--bg); }
+::selection { background: var(--mark); color: var(--text); }
 
 h1, h2, p, ul { margin: 0; }
 ul { padding: 0; list-style: none; }
@@ -71,9 +70,8 @@ h1 {
 }
 
 section { margin-top: clamp(2.5rem, 7vh, 4rem); }
-section p { margin-top: 0.9rem; }
 
-.links { margin-top: clamp(2.5rem, 7vh, 4rem); border-top: 1px solid var(--line); }
+.links { margin-top: 1.1rem; border-top: 1px solid var(--line); }
 .links li {
   display: grid;
   grid-template-columns: 6.5rem 1fr;
@@ -86,9 +84,9 @@ section p { margin-top: 0.9rem; }
   text-decoration: none;
   transition: color 0.2s;
 }
-.links a:hover, .links a:focus-visible { color: var(--accent); }
+.links a:hover, .links a:focus-visible { color: var(--mark); }
 
-a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+a:focus-visible { outline: 2px solid var(--muted); outline-offset: 4px; border-radius: 2px; }
 
 /* The Kvantra mark: fixed to the right, tall, and running off the edge. */
 .mark {

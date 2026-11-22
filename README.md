@@ -1,6 +1,6 @@
 # lorenzask.com
 
-My personal site: one dark page with a short about, four links and the
+My personal site: one dark page with my name, four links and the
 Kvantra mark. Plain HTML and CSS, no JavaScript, run locally with
 [Vite](https://vite.dev).
 
@@ -17,16 +17,15 @@ Stop it with `Ctrl + C`.
 
 | File | What it is |
 |---|---|
-| `index.html` | The whole page: the name, the about text, the links and the Kvantra mark. |
+| `index.html` | The whole page: the name, the links and the Kvantra mark. |
 | `src/style.css` | Colours, fonts and layout. The colours and fonts are at the top. |
 | `public/favicon.svg` | The icon in the browser tab. |
 | `vercel.json` | Sends the old addresses (`/about/`, `/kvantra/`, `/contact/`, `/privacy/`) to the homepage. |
 
 ## Changing things
 
-- **The about text:** edit the two `<p>` lines under "About" in `index.html`.
 - **A link:** each row in the `links` list in `index.html` is a label and a link.
-- **Colours:** the tokens at the top of `src/style.css` (`--bg`, `--text`, `--mark`, `--accent`).
+- **Colours:** the tokens at the top of `src/style.css` (`--bg`, `--text`, `--mark`).
 
 ## Publishing
 
