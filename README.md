@@ -1,7 +1,7 @@
 # lorenzask.com
 
-My personal site: one dark page with my name, four links and the
-Kvantra mark. Plain HTML and CSS, plus one small script for the mark, run locally with
+My personal site: one dark page with my name, a Contact and a Startup
+section that open like an FAQ, and the Kvantra mark. Plain HTML and CSS, plus one small script for the mark, run locally with
 [Vite](https://vite.dev).
 
 ## Run it on your Mac
@@ -17,16 +17,18 @@ Stop it with `Ctrl + C`.
 
 | File | What it is |
 |---|---|
-| `index.html` | The whole page: the name, the links and the Kvantra mark. |
+| `index.html` | The whole page: the name, the two sections and the Kvantra mark. |
 | `src/style.css` | Colours, fonts and layout. The colours and fonts are at the top. |
 | `src/mark.js` | Makes the Kvantra mark scatter into dots under the mouse and rebuild. The `SETTINGS` block at the top is safe to play with. |
 | `public/favicon.svg` | The icon in the browser tab. |
-| `public/fonts/` | The two fonts (Source Serif 4 and Inter) and their licences. Hosted here so the page loads nothing from other sites. |
+| `public/fonts/` | The two fonts (Instrument Serif and Inter) and their licences. Hosted here so the page loads nothing from other sites. |
 | `vercel.json` | Sends the old addresses (`/about/`, `/kvantra/`, `/contact/`, `/privacy/`) to the homepage. |
 
 ## Changing things
 
-- **A link:** each row in the `links` list in `index.html` is a label and a link.
+- **A link:** each section in `index.html` starts with a line of links (`panel-links`).
+- **The Kvantra text:** the two `<p>` paragraphs under it in the Startup section.
+- **Which section starts open:** the one whose `<details>` tag has the word `open`.
 - **Colours:** the tokens at the top of `src/style.css` (`--bg`, `--text`, `--mark`).
 
 ## Publishing

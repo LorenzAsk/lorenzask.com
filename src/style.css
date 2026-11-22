@@ -1,6 +1,6 @@
 /* ==========================================================================
    LORENZASK.COM
-   One dark page: a name, a few words, four links, and the Kvantra mark
+   One dark page: a name, two sections that open like an FAQ, and the Kvantra mark
    drawn in thin lines on the right. Colours and fonts are the tokens below.
    ========================================================================== */
 
@@ -8,9 +8,9 @@
    sites. Both are open fonts (SIL Open Font License); the licences sit next
    to the files. */
 @font-face {
-  font-family: 'Source Serif 4';
-  src: url('/fonts/source-serif-4.woff2') format('woff2');
-  font-weight: 200 900;
+  font-family: 'Instrument Serif';
+  src: url('/fonts/instrument-serif.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -27,11 +27,11 @@
 
   --bg:     #0e0e0d;   /* the page */
   --text:   #ece9e1;   /* warm off-white */
-  --muted:  #8b877d;   /* labels */
-  --line:   #2a2823;   /* the thin rules between links */
+  --muted:  #8b877d;   /* the Startup text and the larper joke */
+  --line:   #2a2823;   /* the thin rules between sections */
   --mark:   #453b29;   /* the Kvantra mark's lines, and links on hover */
 
-  --serif: 'Source Serif 4', 'Iowan Old Style', Georgia, serif;
+  --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
   --sans:  'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   --gutter: clamp(1.5rem, 6vw, 6rem);
@@ -43,12 +43,10 @@ html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
 body {
   margin: 0;
   min-height: 100svh;
-  display: flex;
-  align-items: center;
   background: var(--bg);
   color: var(--text);
   font-family: var(--serif);
-  font-size: 1.2rem;
+  font-size: clamp(1.35rem, 2.2vw, 1.5rem);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -67,47 +65,79 @@ main {
   z-index: 1;
   width: 100%;
   max-width: calc(31rem + var(--gutter) * 2);
-  padding: clamp(3rem, 10vh, 6rem) var(--gutter);
+  /* Starts a fixed distance from the top, so the page doesn't jump when a
+     section opens. */
+  padding: clamp(3rem, 22vh, 14rem) var(--gutter) clamp(3rem, 10vh, 6rem);
 }
 
 h1 {
-  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  font-size: clamp(3.6rem, 7vw, 5.4rem);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
 }
 
-/* Small grey labels: "About", "Email" and so on. */
-.label {
+/* ---- The sections: titles that open and close, like an FAQ ---- */
+
+/* Lets the browser animate a section's height between closed and open. */
+:root { interpolate-size: allow-keywords; }
+
+.sections { margin-top: clamp(2.5rem, 7vh, 4rem); border-top: 1px solid var(--line); }
+details { border-bottom: 1px solid var(--line); }
+
+/* The title row you click. */
+summary {
+  padding: 1rem 0;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary:focus-visible { outline: 2px solid var(--muted); outline-offset: 4px; border-radius: 2px; }
+
+h2 {
+  font-size: clamp(1.7rem, 3vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* Opening and closing: the content's height slides between nothing and its
+   natural size. Browsers that can't animate this simply open at once. */
+details::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition: block-size 0.45s cubic-bezier(0.16, 1, 0.3, 1), content-visibility 0.45s allow-discrete;
+}
+details[open]::details-content { block-size: auto; }
+
+/* Inside a section: a line of links on top, then (in Startup) a short text. */
+.panel { padding: 0.2rem 0 1.6rem; }
+.panel-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.1rem; }
+.panel-links a { text-decoration: none; transition: color 0.2s; }
+.panel-links a:hover, .panel-links a:focus-visible { color: var(--mark); }
+.panel-links .icon { display: block; width: 1.3rem; height: 1.3rem; fill: currentColor; } /* LinkedIn and GitHub logos */
+.panel-links + p { margin-top: 1.1rem; }
+.panel p + p { margin-top: 0.9rem; }
+.panel p:not(.panel-links) {
   font-family: var(--sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.95rem;
+  line-height: 1.65;
   color: var(--muted);
 }
 
-section { margin-top: clamp(2.5rem, 7vh, 4rem); }
-
-.links { margin-top: 1.1rem; border-top: 1px solid var(--line); }
-.links li {
-  display: grid;
-  grid-template-columns: 6.5rem 1fr;
-  align-items: baseline;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--line);
-}
-.links a {
-  justify-self: start;
-  text-decoration: none;
+/* The joke next to the GitHub logo: "developer" crossed out, "larper" after it. */
+.larp { display: inline-flex; align-items: center; gap: 0.55rem; }
+.larp span {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
   transition: color 0.2s;
 }
-.links a:hover, .links a:focus-visible { color: var(--mark); }
+.larp s { text-decoration-thickness: 1px; opacity: 0.7; }
+.larp:hover span, .larp:focus-visible span { color: var(--mark); }
 
 a:focus-visible { outline: 2px solid var(--muted); outline-offset: 4px; border-radius: 2px; }
-
-.links .pair { display: flex; align-items: baseline; gap: 0.6rem; }
-.links .dot { color: var(--muted); }
 
 /* The Kvantra mark: fixed to the right, tall, and running off the edge. */
 .mark {
@@ -139,8 +169,7 @@ a:focus-visible { outline: 2px solid var(--muted); outline-offset: 4px; border-r
 
 /* Narrow screens: no room beside the text, so the mark sits below it. */
 @media (max-width: 900px) {
-  body { display: block; }
-  main { padding-bottom: 2rem; }
+  main { padding-top: clamp(3rem, 10vh, 5rem); padding-bottom: 2rem; }
   .mark {
     position: relative;
     right: auto; top: auto;
@@ -149,4 +178,8 @@ a:focus-visible { outline: 2px solid var(--muted); outline-offset: 4px; border-r
     margin: 1rem 0 3rem 22vw;
     transform: none;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details::details-content { transition: none; }
 }
