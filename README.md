@@ -20,6 +20,7 @@ Stop it with `Ctrl + C`.
 | `index.html` | The whole page: the name, the links and the Kvantra mark. |
 | `src/style.css` | Colours, fonts and layout. The colours and fonts are at the top. |
 | `public/favicon.svg` | The icon in the browser tab. |
+| `public/fonts/` | The two fonts (Source Serif 4 and Inter) and their licences. Hosted here so the page loads nothing from other sites. |
 | `vercel.json` | Sends the old addresses (`/about/`, `/kvantra/`, `/contact/`, `/privacy/`) to the homepage. |
 
 ## Changing things

@@ -4,6 +4,24 @@
    drawn in thin lines on the right. Colours and fonts are the tokens below.
    ========================================================================== */
 
+/* The two fonts live in public/fonts/, so the page loads nothing from other
+   sites. Both are open fonts (SIL Open Font License); the licences sit next
+   to the files. */
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('/fonts/source-serif-4.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
 
